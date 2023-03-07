@@ -1,12 +1,13 @@
 import logo from './logo.svg';
 import './App.css';
 
+import AllRoutes from './components/routes';
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-       
-      </header>
+      
+      <AllRoutes />
+      
     </div>
   );
 }
