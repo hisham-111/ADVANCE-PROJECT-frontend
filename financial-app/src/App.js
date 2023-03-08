@@ -1,8 +1,8 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
-import SideBar from './components/sideBar/sideBar.js';
-import AllRoutes from './components/routes';
-import { ThemeProvider } from '@mui/material/styles';
+import SignInForm from './components/SignInForm/SignInForm';
+// import AllRoutes from './components/routes';
+// import { ThemeProvider } from '@mui/material/styles';
 import { ColorModeContext, useMode } from "./theme";
 import CssBaseline from '@mui/material/CssBaseline';
 
@@ -19,11 +19,11 @@ function App() {
   return (
     <div className="App">
           <ColorModeContext.Provider value={colorMode}>
-          <ThemeProvider theme={theme}>
+          {/* <ThemeProvider theme={theme}> */}
           <CssBaseline />
       {/* <AllRoutes /> */}
-      <SideBar/>
-      </ThemeProvider>
+      <SignInForm />
+      {/* </ThemeProvider> */}
       </ColorModeContext.Provider>
     </div>
   );
