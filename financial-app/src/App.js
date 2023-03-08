@@ -5,6 +5,7 @@ import AllRoutes from './components/routes';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import CssBaseline from '@mui/material/CssBaseline';
+import { CssBaseline, ThemeProvider } from "@mui/material";
 
 function App() {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -20,11 +21,13 @@ function App() {
   );
   return (
     <div className="App">
+          <ColorModeContext.Provider value={colorMode}>
           <ThemeProvider theme={theme}>
           <CssBaseline />
-      {/* <AllRoutes /> */}
+      <AllRoutes />
       <SideBar/>
       </ThemeProvider>
+      </ColorModeContext.Provider>
     </div>
   );
 }
