@@ -2,27 +2,26 @@ import logo from './logo.svg';
 import './App.css';
 import SideBar from './components/sideBar/sideBar.js';
 import AllRoutes from './components/routes';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core';
-import useMediaQuery from '@mui/material/useMediaQuery';
+import { ThemeProvider } from '@mui/material/styles';
+import { ColorModeContext, useMode } from "./theme";
 import CssBaseline from '@mui/material/CssBaseline';
-import { CssBaseline, ThemeProvider } from "@mui/material";
 
 function App() {
   const [theme, colorMode] = useMode();
-  
-  useEffect(() => {
-    const mode = localStorage.getItem("colorMode");
-    if (mode) {
-      colorMode.toggle();
-    }
-  }, []);
+
+  // useEffect(() => {
+  //   const mode = localStorage.getItem("colorMode");
+  //   if (mode) {
+  //     colorMode.toggle();
+  //   }
+  // }, []);
   
   return (
     <div className="App">
           <ColorModeContext.Provider value={colorMode}>
           <ThemeProvider theme={theme}>
           <CssBaseline />
-      <AllRoutes />
+      {/* <AllRoutes /> */}
       <SideBar/>
       </ThemeProvider>
       </ColorModeContext.Provider>
