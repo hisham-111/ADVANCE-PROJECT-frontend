@@ -8,17 +8,15 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { CssBaseline, ThemeProvider } from "@mui/material";
 
 function App() {
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-
-  const theme = React.useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode: prefersDarkMode ? 'dark' : 'light',
-        },
-      }),
-    [prefersDarkMode],
-  );
+  const [theme, colorMode] = useMode();
+  
+  useEffect(() => {
+    const mode = localStorage.getItem("colorMode");
+    if (mode) {
+      colorMode.toggle();
+    }
+  }, []);
+  
   return (
     <div className="App">
           <ColorModeContext.Provider value={colorMode}>
