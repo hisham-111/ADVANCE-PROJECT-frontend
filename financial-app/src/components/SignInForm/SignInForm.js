@@ -3,40 +3,103 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { Stack } from '@mui/system';
 import { Password } from '@mui/icons-material';
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
+import { blue } from '@mui/material/colors';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 const SignInForm = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [formValues, setFormValues] = useState({
+    email: '',
+    password: '',
+  });
+  const [formErrors, setFormErrors] = useState({
+    email: '',
+    password: '',
+  });
+
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleInputChange = (event) => {
+    const { id, value } = event.target;
+    setFormValues({ ...formValues, [id]: value });
+    setFormErrors({ ...formErrors, [id]: '' });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    let errors = {};
+    if (!formValues.email) {
+      errors.email = 'Email is required';
+    }
+    if (!formValues.password) {
+      errors.password = 'Password is required';
+    }
+    if (Object.keys(errors).length > 0) {
+      setFormErrors(errors);
+    } else {
+      // Submit the form
+    }
+  };
 
   return (
-    <Stack alignItems="center" justifyContent="space-between" spacing={10} direction="column" marginTop={17}>
-        <Typography fontSize={50} letterSpacing={5}>Signin To the App</Typography>
-      <Stack 
-    // direction="column"   
-    // alignItems="center"  
-       spacing={8}>
-        <TextField 
-       
-        id='email'
-        type='email'
-        label='Email'
-        
-        size='30'
-        required 
-        />
-        <TextField  
-        id='password'
-        type='password'
-        label='Password'
-        
-        variant='outlined'
+    <Stack
+      alignItems="center"
+      justifyContent="space-between"
+      spacing={10}
+      direction="column"
+      marginTop={10}
+    >
+      <Typography fontSize={50} letterSpacing={5} textAlign={"center"}>
+        Signin To the <Box display="inline" style={{color:'#014374'}}>App</Box>
+      </Typography>
+
+      <TextField
+        id="email"
+        type="email"
+        label="Email"
+        style={{ width: "calc(100% - 100px)" }}
+        size="30"
         required
-        />
-        <Button variant='contained'
-     style={{ backgroundColor: '#014374' }}
-        >Signin</Button>
-      </Stack>
+        error={Boolean(formErrors.email)}
+        helperText={formErrors.email}
+        onChange={handleInputChange}
+      />
+      <TextField
+        id="password"
+        type={showPassword ? "text" : "password"}
+        label="Password"
+        style={{ width: "calc(100% - 100px)" }}
+        variant="outlined"
+        required
+        error={Boolean(formErrors.password)}
+        helperText={formErrors.password}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton onClick={handleClickShowPassword}>
+                {showPassword ? <VisibilityOff /> : <Visibility />}
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
+        onChange={handleInputChange}
+      />
+      <Button
+        variant="contained"
+        style={{ backgroundColor: "#014374", width: "200px" }}
+        onClick={handleSubmit}
+      >
+        Signin
+      </Button>
     </Stack>
   );
 };
 
 export default SignInForm;
+
