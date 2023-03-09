@@ -50,10 +50,9 @@ const SignInForm = () => {
   return (
     <Stack
       alignItems="center"
-      justifyContent="space-between"
-      spacing={10}
+      justifyContent="center"
+      spacing={8}
       direction="column"
-      marginTop={10}
     >
       <Typography fontSize={50} letterSpacing={5} textAlign={"center"}>
         Signin To the <Box display="inline" style={{color:'#014374'}}>App</Box>
@@ -65,6 +64,7 @@ const SignInForm = () => {
         label="Email"
         style={{ width: "calc(100% - 100px)" }}
         size="30"
+        
         required
         error={Boolean(formErrors.email)}
         helperText={formErrors.email}
@@ -74,7 +74,7 @@ const SignInForm = () => {
         id="password"
         type={showPassword ? "text" : "password"}
         label="Password"
-        style={{ width: "calc(100% - 100px)" }}
+        style={{ width: "calc(100% - 100px)"}}
         variant="outlined"
         required
         error={Boolean(formErrors.password)}
@@ -92,7 +92,7 @@ const SignInForm = () => {
       />
       <Button
         variant="contained"
-        style={{ backgroundColor: "#014374", width: "200px" }}
+        style={{ backgroundColor: "#014374", width: "150px",borderRadius: '10px' }}
         onClick={handleSubmit}
       >
         Signin
