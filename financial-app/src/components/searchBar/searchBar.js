@@ -25,10 +25,12 @@ function SearchBar() {
                   "& > :not(style)": {
                     m: -1,
                     width: "30ch",
-                  },
+                    
+                  },bgcolor: "#6D7D93"
                 }}
+                
               />
-              <NotificationsIcon fontSize="large" />
+              <NotificationsIcon fontSize="large" sx={{ color: "#6D7D93" }} />
             </Stack>
           </Box>
         );
