@@ -8,6 +8,7 @@ import Admins from '../../pages/admins/admins';
 import Help from '../../pages/help/help';
 import Signin from '../../pages/signin/signin';
 import Changepass from '../../pages/changepass/changepass';
+import Statistics from '../../pages/statistics/statistics'
 import { BrowserRouter } from 'react-router-dom';
 export default function AllRoutes() {
   return (
@@ -21,6 +22,7 @@ export default function AllRoutes() {
             <Route path="/transactions" element={<Trans />} />
             <Route path="/help" element={<Help />} />
             <Route  path="/signin" element={<Signin />} />
+            <Route  path="/statistics" element={<Statistics />} />
         </Routes>
         </BrowserRouter>
     </div>
