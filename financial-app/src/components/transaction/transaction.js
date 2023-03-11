@@ -1,4 +1,4 @@
-import * as React from "react";
+ import * as React from "react";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -7,9 +7,9 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import { flexbox, fontWeight } from "@mui/system";
-import Divider from "@mui/material/Divider";
+// import useMediaQuery from "@mui/material/useMediaQuery";
+// import { flexbox, fontWeight } from "@mui/system";
+// import Divider from "@mui/material/Divider";
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
 function TabPanel(props) {
@@ -89,7 +89,7 @@ export default function BasicTabs() {
            
           <Item sx={{ display: "flex", justifyContent: "space-between" }}>
               <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                <img src="http://placekitten.com/g/70/70" />
+                {/* <img src="http://placekitten.com/g/70/70" /> */}
                 <Box sx={{ marginLeft: "15px" }}>
                   <Typography variant="h6" component="h2">
                     1st category
@@ -109,7 +109,7 @@ export default function BasicTabs() {
 
             <Item sx={{ display: "flex", justifyContent: "space-between" }}>
               <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                <img src="http://placekitten.com/g/70/70" />
+                {/* <img src="http://placekitten.com/g/70/70" /> */}
                 <Box sx={{ marginLeft: "15px" }}>
                   <Typography variant="h6" component="h2">
                     2nd category
@@ -129,7 +129,7 @@ export default function BasicTabs() {
 
             <Item sx={{ display: "flex", justifyContent: "space-between" }}>
               <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                <img src="http://placekitten.com/g/70/70" />
+                {/* <img src="http://placekitten.com/g/70/70" /> */}
                 <Box sx={{ marginLeft: "15px" }}>
                   <Typography variant="h6" component="h2">
                     3rd category
@@ -149,7 +149,7 @@ export default function BasicTabs() {
 
             <Item sx={{ display: "flex", justifyContent: "space-between" }}>
               <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                <img src="http://placekitten.com/g/70/70" />
+                {/* <img src="http://placekitten.com/g/70/70" /> */}
                 <Box sx={{ marginLeft: "15px" }}>
                   <Typography variant="h6" component="h2">
                     4th category
@@ -169,7 +169,7 @@ export default function BasicTabs() {
 
             <Item sx={{ display: "flex", justifyContent: "space-between" }}>
               <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                <img src="http://placekitten.com/g/70/70" />
+                {/* <img src="http://placekitten.com/g/70/70" /> */}
                 <Box sx={{ marginLeft: "15px" }}>
                   <Typography variant="h6" component="h2">
                     5th category
@@ -189,7 +189,7 @@ export default function BasicTabs() {
 
             <Item sx={{ display: "flex", justifyContent: "space-between" }}>
               <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                <img src="http://placekitten.com/g/70/70" />
+                {/* <img src="http://placekitten.com/g/70/70" /> */}
                 <Box sx={{ marginLeft: "15px" }}>
                   <Typography variant="h6" component="h2">
                     6th category
