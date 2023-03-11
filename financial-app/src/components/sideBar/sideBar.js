@@ -142,11 +142,9 @@ function Sidebar() {
           </Drawer>
         </div>
       ) : (
-        <div>
-          <Box variant="permanent" anchor="left">
+          <Box variant="permanent" anchor="left" maxWidth="315px">
             {drawer}
           </Box>
-        </div>
       )}
     </>
   );
