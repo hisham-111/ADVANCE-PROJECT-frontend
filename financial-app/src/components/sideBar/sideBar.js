@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation, Link } from "react-router-dom";
 import "./sideBar.css";
 import {
   Drawer,
@@ -11,6 +11,7 @@ import {
   useMediaQuery,
   Typography,
 } from "@mui/material";
+import { color, styled } from "@mui/system";
 import {
   Dashboard as DashboardIcon,
   Person as PersonIcon,
@@ -26,6 +27,10 @@ import Logo from "../../assets/images/logo.svg";
 function Sidebar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isMobile = useMediaQuery("(max-width:600px)");
+  const ActiveListItem = styled(ListItem)(({ theme }) => ({
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.primary.contrastText,
+  }));
 
   const handleDrawerToggle = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -35,7 +40,7 @@ function Sidebar() {
     {
       text: "Dashboard",
       icon: <DashboardIcon />,
-      path: "/dashboard",
+      path: "/",
     },
     {
       text: "Profile",
@@ -82,11 +87,25 @@ function Sidebar() {
           // >
           <ListItem
             button
-            selected={window.location.pathname === item.path}
+            component={Link}
+            to={item.path}
             key={item.path}
             onClick={handleDrawerToggle}
+            style={{
+              backgroundColor:
+                window.location.pathname === item.path
+                  ? "rgba(2, 111, 194, 0.1)"
+                  : "",
+              color: window.location.pathname === item.path ? "#026FC2" : "",
+            }}
           >
-            <ListItemIcon>{item.icon}</ListItemIcon>
+            <ListItemIcon
+              style={{
+                color: window.location.pathname === item.path ? "#026FC2" : "",
+              }}
+            >
+              {item.icon}
+            </ListItemIcon>
             <ListItemText primary={item.text} />
           </ListItem>
           // </NavLink>
@@ -142,9 +161,9 @@ function Sidebar() {
           </Drawer>
         </div>
       ) : (
-          <Box variant="permanent" anchor="left" maxWidth="315px">
-            {drawer}
-          </Box>
+        <Box variant="permanent" anchor="left" maxWidth="315px">
+          {drawer}
+        </Box>
       )}
     </>
   );
