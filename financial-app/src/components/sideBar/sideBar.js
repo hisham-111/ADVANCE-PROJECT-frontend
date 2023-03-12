@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink, useLocation, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./sideBar.css";
 import {
   Drawer,
@@ -11,7 +11,6 @@ import {
   useMediaQuery,
   Typography,
 } from "@mui/material";
-import { color, styled } from "@mui/system";
 import {
   Dashboard as DashboardIcon,
   Person as PersonIcon,
@@ -27,10 +26,7 @@ import Logo from "../../assets/images/logo.svg";
 function Sidebar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isMobile = useMediaQuery("(max-width:600px)");
-  const ActiveListItem = styled(ListItem)(({ theme }) => ({
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.primary.contrastText,
-  }));
+
 
   const handleDrawerToggle = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -79,12 +75,6 @@ function Sidebar() {
           User Panel
         </Typography>
         {drawerItems.map((item, index) => (
-          // <NavLink
-          //   to={item.path}mt={2}
-          //   key={index}
-          //   className="link"
-          //   activeClassName="active"
-          // >
           <ListItem
             button
             component={Link}
@@ -108,7 +98,6 @@ function Sidebar() {
             </ListItemIcon>
             <ListItemText primary={item.text} />
           </ListItem>
-          // </NavLink>
         ))}
       </Box>
       <Box sx={{ marginX: "14px" }}>
