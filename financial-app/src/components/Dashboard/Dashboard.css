@@ -1,0 +1,28 @@
+/* * {
+    box-sizing: border-box;
+}
+.page {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(3, auto);
+    grid-template-areas:    "Header Header Header Header Header"
+                            " Menu Menu Menu"
+                            "transactions transactions transactions transactions transactions "
+    ;
+}
+
+.header {
+    grid-area: Header;
+}
+
+.sideBar {
+    grid-area: side-bar;
+}
+
+.transaction {
+    grid-area: transactions;
+}
+
+.menu {
+    grid-area: Menu;
+} */
