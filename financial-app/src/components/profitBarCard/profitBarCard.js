@@ -32,7 +32,7 @@ export default function profitBar({ goalProfit, realProfit }) {
         <Stack direction="row" alignItems="center">
           <ArrowDropUpRoundedIcon color="primary" fontSize="large" />
           <Typography variant="subtitle1" fontWeight={600}>
-            {progress}%
+            {progress.toFixed(2)}%
           </Typography>
         </Stack>
       </Stack>
