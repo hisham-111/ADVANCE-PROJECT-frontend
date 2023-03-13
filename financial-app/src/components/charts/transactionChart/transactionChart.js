@@ -28,54 +28,11 @@ ChartJS.register(
   LineElement,
   
 );
-// const data = [
-//   {
-//     id: "1",
-//     balance: "40",
-//     start_date: "2022-01-02",
-//   },
-//   {
-//     id: "2",
-//     balance: "20",
-//     start_date: "2022-02-02",
-//   },
-//   {
-//     id: "3",
-//     balance: "60",
-//     start_date: "2022-03-02",
-//   },
-//   {
-//     id: "4",
-//     balance: "90",
-//     start_date: "2022-04-02",
-//   },
-//   {
-//     id: "5",
-//     balance: "30",
-//     start_date: "2022-05-02",
-//   },
-// ];
 
-// const chartData = data.map((e) => ({
-//   x: new Date(e.start_date),
-//   y: e.balance,
-// }));
 
-// const options = {
-//   scales: {
-//     yAxes: [
-//       {
-//         ticks: {
-//           beginAtZero: true,
-//         },
-//       },
-//     ],
-//   },
-// };
 
-const BalanceChart = () => {
-
-//     const [chartData, setChartData] = useState({});
+export default function transactionChart() {
+    //     const [chartData, setChartData] = useState({});
   
 //     useEffect(() => {
     //   const fetchData = async () => {
@@ -106,7 +63,7 @@ const BalanceChart = () => {
       labels: labels,
       datasets: [
         {
-          // label: "Monthly Balance",
+          
           backgroundColor: "#037BCB",
           borderColor: "#037BCB",
           data: [0, 10, 5, 2, 20, 30, 45],
@@ -115,19 +72,17 @@ const BalanceChart = () => {
       ],
     };
     const options = {
-      responsive: true,
-      plugins: {
-        legend: {
-          display: false,
-        },
-      },}
+        responsive: true,
+        plugins: {
+          legend: {
+            display: false,
+          },
+        },}
     
   return (
-    <Box>
+<Box>
       
-      <Line data={data} options={options} />
-          </Box>
-  );
-};
+      <Bar data={data} options={options} />
+          </Box>  )
+}
 
-export default BalanceChart;
