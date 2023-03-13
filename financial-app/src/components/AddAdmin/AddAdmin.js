@@ -123,13 +123,13 @@ export default function AddAdmin() {
               }}
           />
         </DialogContent>
-        <DialogActions style={{display:"flex",flexDirection:"column", justifyContent:"space-around"}}>
+        <DialogActions style={{display:"flex",flexDirection:"row", justifyContent:"space-around"}}>
+        <Button onClick={handleClose} 
+        style={{ backgroundColor: "#FFF", width: "160px",borderRadius: '10px',color:"#026FC2",fontWeight:"600" }}  variant="outlined">Cancel</Button>
+        
         <Button onClick={handleSubmit}
-        style={{ backgroundColor: "#026FC2", width: "160px",borderRadius: '10px',color:"#FFF",border:"2px solid",fontWeight:"600" }}>Add Account</Button>
+        style={{ backgroundColor: "#026FC2", width: "160px",borderRadius: '10px',color:"#FFF",fontWeight:"600" }} variant="outlined">Add Account</Button>
 
-        <Button onClick={handleClose} variant="outlined"
-        style={{ backgroundColor: "#FFF", width: "160px",borderRadius: '10px',color:"#026FC2",border:"2px solid",fontWeight:"600" ,marginTop:"10px",marginRight:"10px"}}>Cancel</Button>
-          
         </DialogActions>
       </Dialog>
     </section>
