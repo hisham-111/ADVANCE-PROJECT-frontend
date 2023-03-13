@@ -84,6 +84,8 @@ export default function AddAdmin() {
             variant="outlined"
             size="30"
             required
+            error={formErrors.fullName !== ''}
+            helperText={formErrors.fullName}
             onChange={handleInputChange}
           />
           <TextField
@@ -110,6 +112,8 @@ export default function AddAdmin() {
             variant="outlined"
             required
             size="30"
+            error={formErrors.password !== ''}
+            helperText={formErrors.password}
             onChange={handleInputChange}
             eye={showPassword ? "text" : "password"}
             InputProps={{
@@ -126,7 +130,7 @@ export default function AddAdmin() {
         <DialogActions style={{display:"flex",flexDirection:"row", justifyContent:"space-around"}}>
         <Button onClick={handleClose} 
         style={{ backgroundColor: "#FFF", width: "160px",borderRadius: '10px',color:"#026FC2",fontWeight:"600" }}  variant="outlined">Cancel</Button>
-        
+
         <Button onClick={handleSubmit}
         style={{ backgroundColor: "#026FC2", width: "160px",borderRadius: '10px',color:"#FFF",fontWeight:"600" }} variant="outlined">Add Account</Button>
 
