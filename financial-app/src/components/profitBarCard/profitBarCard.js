@@ -9,12 +9,12 @@ export default function profitBar({ goalProfit, realProfit }) {
   return (
     <Box
       sx={{
-        width: "300px",
+        width: "29%",
         padding: "24px",
         border: "1px solid rgba(109, 125, 147, 0.15)",
         boxShadow: "4px 4px 20px -10px rgba(0, 0, 0, 0.1)",
         borderRadius: "12px",
-        bgcolor: "beige",
+        bgcolor: "white",
       }}
     >
       <Typography variant="h6" style={{ fontWeight: "bold" }} marginBottom={2}>
@@ -39,7 +39,7 @@ export default function profitBar({ goalProfit, realProfit }) {
       <LinearProgress
         variant="determinate"
         value={progress}
-        style={{ width: "250px", height: "26px", borderRadius: "5px" }}
+        style={{ width: "100%", height: "26px", borderRadius: "5px" }}
       />
     </Box>
   );

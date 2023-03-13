@@ -49,10 +49,11 @@ export default function AdminsCard() {
     <Box
       sx={{
         padding: "50px",
-        width: "650px",
+        width: "60%",
         border: "1px solid rgba(109, 125, 147, 0.15)",
         boxShadow: "4px 4px 20px -10px rgba(0, 0, 0, 0.1)",
         borderRadius: "12px",
+        bgcolor:"white",
       }}
     >
       <Typography variant="h6" sx={{ fontWeight: "bold" }} marginBottom={1}>

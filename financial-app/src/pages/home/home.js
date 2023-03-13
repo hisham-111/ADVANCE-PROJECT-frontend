@@ -10,26 +10,41 @@ import BillsCard from "../../components/billsCard/billsCard";
 
 export default function home() {
   return (
-    <div className="Dashboard">
+    <div className="dashboard" style={{ backgroundColor: "#F8F9FD" }}>
       <Layout>
-          <Stack direction="row">
-            <SelectMenu />
-            <SelectMenu />
+        <Stack direction="row">
+          <SelectMenu />
+          <SelectMenu />
+        </Stack>
+        <Stack direction="row" justifyContent="space-between">
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              flexWrap="wrap"
+            width="67%"
+            >
+              <InOutBalanceCard
+                amount="200.000"
+                typeCode="Income"
+                currency="$"
+              />
+              <InOutBalanceCard
+                amount="100.000"
+                typeCode="Outcome"
+                currency="$"
+              />
+              <InOutBalanceCard
+                amount={200.0 - 100.0}
+                typeCode="Balance"
+                currency="$"
+              />
+            </Stack>
+            <ProfitBarCard realProfit={20} goalProfit={30} />
           </Stack>
           <Stack direction="row" justifyContent="space-between">
-            <Box sx={{width:"70%"}}>
-          <Stack direction="row" justifyContent="space-between" >
-            <InOutBalanceCard amount="200" typeCode="Income" currency="$"/>
-            <InOutBalanceCard amount="100" typeCode="Outcome" currency="$"/>
-            <InOutBalanceCard amount={200-100} typeCode="Income" currency="$"/>
-          </Stack>
           <TransactionHistory />
-          </Box>
-          <Box>
-            <ProfitBarCard realProfit={20} goalProfit={30}/>
-            <BillsCard/>
-          </Box>
-        </Stack>
+            <BillsCard />
+          </Stack>
       </Layout>
     </div>
   );

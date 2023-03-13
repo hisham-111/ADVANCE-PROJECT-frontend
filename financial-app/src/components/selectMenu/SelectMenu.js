@@ -9,7 +9,7 @@ function SelectMenu() {
   };
 
   return (
-    <FormControl sx={{ m: 1, minWidth: 10 }}>
+    <FormControl sx={{ m: 1, minWidth: 10 , bgcolor:"white"}}>
       <InputLabel id="timeframe-select-label">Timeframe</InputLabel>
       <Select
         labelId="timeframe-select-label"

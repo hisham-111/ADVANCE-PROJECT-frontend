@@ -27,7 +27,6 @@ function Sidebar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isMobile = useMediaQuery("(max-width:600px)");
 
-
   const handleDrawerToggle = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -39,9 +38,9 @@ function Sidebar() {
       path: "/",
     },
     {
-      text: "Profile",
+      text: "Admins",
       icon: <PersonIcon />,
-      path: "/profile",
+      path: "/admins",
     },
     {
       text: "Transactions",
@@ -128,7 +127,7 @@ function Sidebar() {
   return (
     <>
       {isMobile ? (
-        <div style={{ margin: "16px" }}>
+        <div style={{ margin: "16px", background: "white" }}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -150,7 +149,16 @@ function Sidebar() {
           </Drawer>
         </div>
       ) : (
-        <Box variant="permanent" anchor="left" maxWidth="315px">
+        <Box
+          variant="permanent"
+          anchor="left"
+          maxWidth="315px"
+          sx={{
+            background: "white",
+            border: "1px solid rgba(109, 125, 147, 0.15)",
+            boxShadow: "4px 4px 20px -10px rgba(0, 0, 0, 0.1)",
+          }}
+        >
           {drawer}
         </Box>
       )}

@@ -7,8 +7,8 @@ function Header()  {
      
         return (
           <Box className="Header_container">
-            <Stack className="Stack" direction="row" spacing={105}>
-              <h1 className="title">DASHBOARD</h1>
+            <Stack direction="row" justifyContent="space-between">
+              <h1>DASHBOARD</h1>
               <SearchBar />
             </Stack>
           </Box>

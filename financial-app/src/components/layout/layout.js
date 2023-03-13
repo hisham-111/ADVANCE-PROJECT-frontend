@@ -10,10 +10,10 @@ export default function Layout({children}) {
     <div className="layout" style={{display:"flex", justifyContent:"space-between"}}>
       
     <SideBar />
-    <Container>
+    <Stack direction="column" spacing={2} paddingX={5} margin={2} width="100%">
     <Header/>
     {children}
-    </Container>
+    </Stack>
   </div>
   )
 }
