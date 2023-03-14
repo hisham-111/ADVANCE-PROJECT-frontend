@@ -3,11 +3,12 @@ import './App.css';
 
 import AllRoutes from './components/routes';
 // import { ThemeProvider } from '@mui/material/styles';
-import { ColorModeContext, useMode } from "./theme";
-import CssBaseline from '@mui/material/CssBaseline';
-import Header from './components/Header/Header.js';
+// import { ColorModeContext, useMode } from "./theme";
+// import CssBaseline from '@mui/material/CssBaseline';
+// import Transaction from './components/transaction/transaction';
+import Header from './components/Header/Header';
 function App() {
-  const [theme, colorMode] = useMode();
+  // const [theme, colorMode] = useMode();
 
   // useEffect(() => {
   //   const mode = localStorage.getItem("colorMode");
@@ -18,14 +19,14 @@ function App() {
   
   return (
     <div className="App">
-          <ColorModeContext.Provider value={colorMode}>
+          {/* <ColorModeContext.Provider value={colorMode}> */}
           {/* <ThemeProvider theme={theme}> */}
-          <CssBaseline />
+          {/* <CssBaseline /> */}
 
-      <AllRoutes />
-      
+      {/* <AllRoutes /> */}
+      <Header />
       {/* </ThemeProvider> */}
-      </ColorModeContext.Provider>
+      {/* </ColorModeContext.Provider> */}
       
     </div>
   );
