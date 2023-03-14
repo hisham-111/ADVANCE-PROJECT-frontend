@@ -127,7 +127,7 @@ function Sidebar() {
   return (
     <>
       {isMobile ? (
-        <div style={{ margin: "16px", background: "white" }}>
+        <div >
           <IconButton
             color="inherit"
             aria-label="open drawer"
