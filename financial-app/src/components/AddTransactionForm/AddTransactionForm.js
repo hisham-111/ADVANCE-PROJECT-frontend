@@ -1,10 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import { FormControl, InputLabel, Select, MenuItem,TextField, Button } from '@mui/material';
+import { FormControl, InputLabel, Select, MenuItem,TextField, Button,Typography,Box, Tabs, Tab} from '@mui/material';
 import { useState } from 'react';
 import { Stack } from '@mui/system';
 
@@ -49,7 +45,9 @@ export default function AddTransactionForm() {
   const [schedule, setSchedule] = useState('');
   const [description, setDescription] = useState('');
   // const [category, setCategory] = useState('');
-
+  
+  
+  
   const categoriesByType = {
     Incomes: ['Bills'],
     Expenses: ['Electricity', 'Building'],
@@ -104,18 +102,20 @@ export default function AddTransactionForm() {
 
 
   <TabPanel value={value} index={0} >
+    <form>
     <Stack spacing={4} >
         <Stack  display="flex" flexDirection="row" justifyContent="space-between">
         <TextField variant='outlined' label="Title" type="text" size="10" required style={{width:"70%"}}/>
 
         <FormControl  style={{width:"25%" ,margin:"0"}}>
-          <InputLabel id="schedule-select-label">Schedule</InputLabel>
+          <InputLabel id="schedule-select-label" >Schedule</InputLabel>
             <Select style={{margin:"0"}}
               labelId="schedule-select-label"
               id="schedule-select"
               value={schedule}
               label="Schedule"
-              onChange={handleScheduleChange} >
+              onChange={handleScheduleChange}
+              required >
                   
               <MenuItem value="Weekly">Weekly</MenuItem>
               <MenuItem value="Monthly">Monthly</MenuItem>
@@ -125,14 +125,15 @@ export default function AddTransactionForm() {
        </Stack>
 
        <Stack  display="flex" flexDirection="row" justifyContent="space-between">
-          <TextField type="date" label="Start-Date" autoFocus focused style={{width:"70%"}}/>
+          <TextField type="date" label="Start-Date" autoFocus required focused style={{width:"70%"}}/>
         <FormControl style={{width:"25%"}}> 
           <InputLabel>TypeCode</InputLabel>
           <Select
             labelId="TypeCode-select-label"
             id="TypeCode-select"
             value={typeCode}
-          label="TypeCode"
+             label="TypeCode"
+             required
           onChange={handleTypeCodeChange}>
             <MenuItem value="Incomes">Income</MenuItem>
             <MenuItem value="Expenses">Expenses</MenuItem>
@@ -141,10 +142,11 @@ export default function AddTransactionForm() {
         </Stack>
 
         <Stack  display="flex" flexDirection="row" justifyContent="space-between">
-          <TextField type="number" variant='outlined' value={amount} label='Amount'  onChange={handleAmountChange} inputProps={{steps:10 }} style={{width:"45%"}}/>  { /*set the increment/decrement step to 100*/}
+          <TextField required type="number" variant='outlined' value={amount} label='Amount'  onChange={handleAmountChange} inputProps={{steps:10 }} style={{width:"45%"}}/>  { /*set the increment/decrement step to 100*/}
           <FormControl style={{width:"25%"}}> 
             <InputLabel>Currency</InputLabel>
             <Select
+              required
               labelId="Currency-select-label"
               id="Currency-select"
               value={currency}
@@ -163,6 +165,7 @@ export default function AddTransactionForm() {
               value={category}
               label="Category"
               onChange={handleCategoryChange}
+              required
             >
               {availableCategories.map((category) => (
                 <MenuItem key={category} value={category}>
@@ -174,24 +177,24 @@ export default function AddTransactionForm() {
         </Stack>
 
       
-    <TextField value={description} placeholder="Description" label="Description" onChange={handleDescriptionChange}  variant='outlined' multiline rows={4}  rowsMax={8}/>
+    <TextField required value={description} placeholder="Description" label="Description" onChange={handleDescriptionChange}  variant='outlined' multiline rows={4}  rowsMax={8}/>
     
-                <Stack display="flex" flexDirection="row" justifyContent="center">
-                  <Button 
-                  style={{ backgroundColor: "#026FC2",
-                          width: "200px",
-                          borderRadius: '10px',
-                          color:"#FFF",
-                          fontWeight:"600",
-                          padding:"10px" }}
-                          variant="outlined"
-                      >Save</Button>
-                    </Stack>
-        
-
-        
+      <Stack display="flex" flexDirection="row" justifyContent="center">
+        <Button 
+        type="submit"
+        style={{ backgroundColor: "#026FC2",
+                width: "200px",
+                borderRadius: '10px',
+                color:"#FFF",
+                fontWeight:"600",
+                padding:"10px" }}
+                variant="outlined"
+            >Save
+          </Button>
+          </Stack>
+             
     </Stack>
-    
+    </form>
   </TabPanel>
 
 
@@ -200,12 +203,13 @@ export default function AddTransactionForm() {
 
 
   <TabPanel value={value} index={1}>
+    <form>
   <Stack spacing={3} >
         
-        <TextField variant='outlined' label="Title" type="text" size="10" required/>
+        <TextField variant='outlined'  label="Title" type="text" size="10" required/>
           <Stack display="flex" flexDirection="row" justifyContent="space-between">
-            <TextField type="date" label="Start-Date" autoFocus  focused style={{width:"48%"}}/>
-            <TextField type="date" label="End-Date" autoFocus  focused   style={{width:"48%"}}/>
+            <TextField type="date" required label="Start-Date" autoFocus  focused style={{width:"48%"}}/>
+            <TextField type="date" required label="End-Date" autoFocus  focused   style={{width:"48%"}}/>
           </Stack>
 
           <Stack display="flex" flexDirection="row" justifyContent="space-between"> 
@@ -216,7 +220,8 @@ export default function AddTransactionForm() {
             id="TypeCode-select"
             value={typeCode}
             label="TypeCode"
-            onChange={handleTypeCodeChange}>
+            onChange={handleTypeCodeChange}
+            required>
             <MenuItem value="Incomes">Income</MenuItem>
             <MenuItem value="Expenses">Expenses</MenuItem>
             </Select>
@@ -230,6 +235,7 @@ export default function AddTransactionForm() {
                 value={category}
                 label="Category"
                 onChange={handleCategoryChange}
+                required
               >
                 {availableCategories.map((category) => (
                   <MenuItem key={category} value={category}>
@@ -241,7 +247,7 @@ export default function AddTransactionForm() {
                 </Stack>
 
           <Stack display="flex" flexDirection="row" justifyContent="space-between">  
-              <TextField type="number"  variant='outlined' value={amount} label='Amount'  onChange={handleAmountChange} inputProps={{steps:10 }} style={{width:"65%"}}/>  { /*set the increment/decrement step to 100*/}
+              <TextField type="number" required  variant='outlined' value={amount} label='Amount'  onChange={handleAmountChange} inputProps={{steps:10 }} style={{width:"65%"}}/>  { /*set the increment/decrement step to 100*/}
               <FormControl style={{width:"30%"}}> 
                 <InputLabel>Currency</InputLabel>
                 <Select
@@ -249,6 +255,7 @@ export default function AddTransactionForm() {
                   id="Currency-select"
                   value={currency}
                   label="Currency"
+                  required
                   onChange={handleCurrencyChange}>
                   <MenuItem value="L.L">L.L.</MenuItem>
                   <MenuItem value="$">$</MenuItem>
@@ -257,21 +264,23 @@ export default function AddTransactionForm() {
                   </Stack>  
       
       
-    <TextField value={description} placeholder="Description" label="Description" onChange={handleDescriptionChange}  variant='outlined' multiline rows={4}  rowsMax={8}/>
-    <Stack display="flex" flexDirection="row" justifyContent="center">
-                  <Button 
-                  style={{ backgroundColor: "#026FC2",
-                          width: "200px",
-                          borderRadius: '10px',
-                          color:"#FFF",
-                          fontWeight:"600",
-                          padding:"10px" }}
-                          variant="outlined"
-                      >Save</Button>
-                    </Stack>
-    </Stack>
-  </TabPanel>
-</Box>
+    <TextField value={description} required placeholder="Description" label="Description" onChange={handleDescriptionChange}  variant='outlined' multiline rows={4}  rowsMax={8}/>
+         <Stack display="flex"  flexDirection="row" justifyContent="center">
+            <Button 
+            type="submit"
+            style={{ backgroundColor: "#026FC2",
+                    width: "200px",
+                    borderRadius: '10px',
+                    color:"#FFF",
+                    fontWeight:"600",
+                    padding:"10px" }}
+                    variant="outlined"
+                >Save</Button>
+              </Stack>
+      </Stack>
+      </form>
+      </TabPanel>
+    </Box>
 
     );
   }
