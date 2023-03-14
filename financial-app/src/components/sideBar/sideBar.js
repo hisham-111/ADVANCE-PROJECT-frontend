@@ -157,6 +157,12 @@ function Sidebar() {
             background: "white",
             border: "1px solid rgba(109, 125, 147, 0.15)",
             boxShadow: "4px 4px 20px -10px rgba(0, 0, 0, 0.1)",
+            // position: "fixed",
+            // zIndex: "1",
+            // top: "0", 
+            // left: "0",
+            // overflowX: "hidden", 
+            
           }}
         >
           {drawer}
