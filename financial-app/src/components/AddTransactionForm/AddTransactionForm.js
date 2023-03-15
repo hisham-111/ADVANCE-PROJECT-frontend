@@ -39,26 +39,49 @@ function a11yProps(index) {
 
 export default function AddTransactionForm() {
   const [value, setValue] = useState(0);
-  // const [TypeCode, setTypeCode] = useState('');
+  const [TypeCode, setTypeCode] = useState('');
   const [currency,SetCurrency] = useState('');
   const [amount, setAmount] = useState(0);
   const [schedule, setSchedule] = useState('');
   const [description, setDescription] = useState('');
-  // const [category, setCategory] = useState('');
-  
-  
-  
-  const categoriesByType = {
-    Incomes: ['Bills'],
-    Expenses: ['Electricity', 'Building'],
-  };
-  const [typeCode, setTypeCode] = useState('Incomes');
   const [category, setCategory] = useState('');
-
-  const availableCategories = categoriesByType[typeCode];
+  const [title, setTitle] = useState('')
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
   };
+
+ const Key = [
+    {
+      id:"1",
+      name:"azzam",
+      description:"azzam description"
+    },
+    {
+      id:"2",
+      name:"hisham",
+      description:"hisham description"
+    }
+  ]
+  const categories = [
+    {
+      id: "1",
+      name: "habibi",
+      typeCode: "Incomes"
+    },
+    {
+      id: "2",
+      name: "azzam",
+      typeCode: "Expenses"
+    },
+    {
+      id: "3",
+      name: "xyz",
+      typeCode: "Incomes"
+    },
+  ]
+  
+
+  
 
   const handleCurrencyChange = (event) =>{
     SetCurrency(event.target.value);
@@ -69,9 +92,7 @@ export default function AddTransactionForm() {
     setAmount(newAmount);
   }
 
-  const handleScheduleChange = (event) =>{  
-    setSchedule(event.target.value);
-  }
+  
   const handleDescriptionChange = (event) =>{
     setDescription(event.target.value);
   }
@@ -105,7 +126,26 @@ export default function AddTransactionForm() {
     <form>
     <Stack spacing={4} >
         <Stack  display="flex" flexDirection="row" justifyContent="space-between">
-        <TextField variant='outlined' label="Title" type="text" size="10" required style={{width:"70%"}}/>
+        {/* <TextField variant='outlined' label="Title" type="text" size="10" required style={{width:"70%"}}/> */}
+
+        <FormControl style={{width:"70%"}}>
+          <InputLabel id="title-select-label">title</InputLabel>
+            <Select
+              labelId="title-select-label"
+              id="title-select"
+              value={title}
+              label="title"
+              onChange={(event) =>{  setTitle(event.target.value)}}
+              required
+            >
+              {Key.map((Key) => (
+              <MenuItem key={Key.id} value={Key.name}>
+                {Key.name}
+              </MenuItem>
+            ))}
+
+              </Select>
+          </FormControl>
 
         <FormControl  style={{width:"25%" ,margin:"0"}}>
           <InputLabel id="schedule-select-label" >Schedule</InputLabel>
@@ -114,7 +154,7 @@ export default function AddTransactionForm() {
               id="schedule-select"
               value={schedule}
               label="Schedule"
-              onChange={handleScheduleChange}
+              onChange={(event) =>{setSchedule(event.target.value)}}
               required >
                   
               <MenuItem value="Weekly">Weekly</MenuItem>
@@ -131,10 +171,10 @@ export default function AddTransactionForm() {
           <Select
             labelId="TypeCode-select-label"
             id="TypeCode-select"
-            value={typeCode}
+            value={TypeCode}
              label="TypeCode"
              required
-          onChange={handleTypeCodeChange}>
+          onChange={(event) =>{  setTypeCode(event.target.value)}}>
             <MenuItem value="Incomes">Income</MenuItem>
             <MenuItem value="Expenses">Expenses</MenuItem>
             </Select>
@@ -142,7 +182,7 @@ export default function AddTransactionForm() {
         </Stack>
 
         <Stack  display="flex" flexDirection="row" justifyContent="space-between">
-          <TextField required type="number" variant='outlined' value={amount} label='Amount'  onChange={handleAmountChange} inputProps={{steps:10 }} style={{width:"45%"}}/>  { /*set the increment/decrement step to 100*/}
+          <TextField required type="number" variant='outlined' value={amount} label='Amount'  onChange={(event) =>{  setAmount(event.target.value)}} inputProps={{steps:10 }} style={{width:"45%"}}/>  { /*set the increment/decrement step to 100*/}
           <FormControl style={{width:"25%"}}> 
             <InputLabel>Currency</InputLabel>
             <Select
@@ -151,7 +191,7 @@ export default function AddTransactionForm() {
               id="Currency-select"
               value={currency}
               label="Currency"
-              onChange={handleCurrencyChange}>
+              onChange={(event) =>{  SetCurrency(event.target.value)}}>
               <MenuItem value="L.L">L.L.</MenuItem>
               <MenuItem value="$">$</MenuItem>
 
@@ -164,20 +204,21 @@ export default function AddTransactionForm() {
               id="category-select"
               value={category}
               label="Category"
-              onChange={handleCategoryChange}
+              onChange={(event) =>{  setCategory(event.target.value)}}
               required
             >
-              {availableCategories.map((category) => (
-                <MenuItem key={category} value={category}>
-                  {category}
-                </MenuItem>
-              ))}
+              {categories.filter(category => category.typeCode == TypeCode).map((category) => (
+              <MenuItem key={category.id} value={category.name}>
+                {category.name}
+              </MenuItem>
+            ))}
+
               </Select>
           </FormControl>
         </Stack>
 
       
-    <TextField required value={description} placeholder="Description" label="Description" onChange={handleDescriptionChange}  variant='outlined' multiline rows={4}  rowsMax={8}/>
+    <TextField  value={description}  placeholder="Description" label="Description" autoFocus  variant='outlined' multiline rows={4}  rowsMax={8}  InputProps={{readOnly: true}}/>
     
       <Stack display="flex" flexDirection="row" justifyContent="center">
         <Button 
@@ -218,7 +259,7 @@ export default function AddTransactionForm() {
           <Select
             labelId="TypeCode-select-label"
             id="TypeCode-select"
-            value={typeCode}
+            value={TypeCode}
             label="TypeCode"
             onChange={handleTypeCodeChange}
             required>
@@ -237,7 +278,7 @@ export default function AddTransactionForm() {
                 onChange={handleCategoryChange}
                 required
               >
-                {availableCategories.map((category) => (
+                {categories.map((category) => (
                   <MenuItem key={category} value={category}>
                     {category}
                   </MenuItem>
