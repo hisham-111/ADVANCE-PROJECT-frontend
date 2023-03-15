@@ -2,12 +2,13 @@
 import './App.css';
 
 
+
 import AllRoutes from './components/routes';
 // import { ThemeProvider } from '@mui/material/styles';
-import { ColorModeContext, useMode } from "./theme";
+// import { ColorModeContext, useMode } from "./theme";
 import CssBaseline from '@mui/material/CssBaseline';
 function App() {
-  const [theme, colorMode] = useMode();
+  // const [theme, colorMode] = useMode();
 
   // useEffect(() => {
   //   const mode = localStorage.getItem("colorMode");
@@ -18,6 +19,7 @@ function App() {
   
   return (
     <div className="App">
+
           <ColorModeContext.Provider value={colorMode}>
           {/* <ThemeProvider theme={theme}> */}
           <CssBaseline />
@@ -25,11 +27,9 @@ function App() {
 
       <AllRoutes />
 
-   
       
       {/* </ThemeProvider> */}
-      </ColorModeContext.Provider>
-      
+      {/* </ColorModeContext.Provider> */}
     </div>
   );
 }
