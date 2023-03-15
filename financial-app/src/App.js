@@ -1,6 +1,7 @@
 // import logo from './logo.svg';
 import './App.css';
 
+
 import AllRoutes from './components/routes';
 // import { ThemeProvider } from '@mui/material/styles';
 import { ColorModeContext, useMode } from "./theme";
@@ -21,6 +22,7 @@ function App() {
           <ColorModeContext.Provider value={colorMode}>
           {/* <ThemeProvider theme={theme}> */}
           <CssBaseline />
+
 
       <AllRoutes />
       
