@@ -7,7 +7,16 @@ export default function profitBar({ goalProfit, realProfit }) {
   const progress = (realProfit / goalProfit) * 100;
 
   return (
-    <Box sx={{ width: "300px", padding: "24px", borderRadius:"12px", bgcolor:"beige" }}>
+    <Box
+      sx={{
+        width: "300px",
+        padding: "24px",
+        border: "1px solid rgba(109, 125, 147, 0.15)",
+        boxShadow: "4px 4px 20px -10px rgba(0, 0, 0, 0.1)",
+        borderRadius: "12px",
+        bgcolor: "beige",
+      }}
+    >
       <Typography variant="h6" style={{ fontWeight: "bold" }} marginBottom={2}>
         Profit Goal
       </Typography>
