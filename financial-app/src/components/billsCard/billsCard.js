@@ -85,7 +85,6 @@ export default function BillsCard() {
     },
   ]);
 
-  
   // handlePay = (id) => {
   //   const response = axios
   //     .put(`http://localhost:8000/fixed/${id}`, {
@@ -112,17 +111,19 @@ export default function BillsCard() {
   return (
     <Box
       sx={{
-        padding: "16px",
-        width: "300px",
+        padding: "24px",
+        width: "29%",
         border: "1px solid rgba(109, 125, 147, 0.15)",
         boxShadow: "4px 4px 20px -10px rgba(0, 0, 0, 0.1)",
         borderRadius: "12px",
+        bgcolor: "white",
       }}
+      
     >
-      <Typography variant="h6" sx={{ fontWeight: "bold" }} marginBottom={1}>
+      <Typography variant="h6" sx={{ fontWeight: "bold" }} mb={2}>
         Upcoming Bills
       </Typography>
-      <Stack spacing="20px">
+      <Stack spacing={2}>
         {bills
           .filter((item) => item.isPaid === false)
           .map((item) => {
@@ -146,7 +147,7 @@ export default function BillsCard() {
                     <LocalGroceryStoreRoundedIcon color="primary" />
                   </Box>
                   <Stack>
-                    <Typography sx={{ fontWeight: "bold", maxWidth: "98px" }}>
+                    <Typography sx={{ fontWeight: "bold" }}>
                       {item.fixed_key.title}
                     </Typography>
                     <Typography
@@ -163,8 +164,8 @@ export default function BillsCard() {
                     sx={{
                       border: "2px solid #026FC2",
                       borderRadius: "6px",
-                      width: "66px",
-                      height: "37px",
+                      maxWidth: "70px",
+                      maxHeight: "40px",
                       fontWeight: "600",
                       fontSize: "14px",
                       textTransform: "none",

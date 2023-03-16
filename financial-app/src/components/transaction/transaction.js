@@ -10,7 +10,7 @@ import { styled } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { flexbox, fontWeight } from "@mui/system";
 import Divider from "@mui/material/Divider";
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -21,7 +21,8 @@ function TabPanel(props) {
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
-      {...other}>
+      {...other}
+    >
       {value === index && (
         <Box sx={{ p: 3 }}>
           <Typography>{children}</Typography>
@@ -60,34 +61,44 @@ export default function BasicTabs() {
   };
 
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box
+      sx={{
+        width:"67%",
+        padding: "32px",
+        border: "1px solid rgba(109, 125, 147, 0.15)",
+        boxShadow: "4px 4px 20px -10px rgba(0, 0, 0, 0.1)",
+        borderRadius: "12px",
+        bgcolor: "white",
+      }}
+    >
+      <Typography variant="h6" sx={{ fontWeight: "bold" }} marginBottom={1}>
+        Transaction History
+      </Typography>
       <Box sx={{ position: "relative" }}>
         <Tabs
           value={value}
           onChange={handleChange}
-          aria-label="basic tabs example">
+          aria-label="basic tabs example"
+        >
           <Tab label="Income" {...a11yProps(0)} />
 
           <Tab label="Outcome" {...a11yProps(1)} sx={{ marginLeft: "-20px" }} />
 
           <Tab
-            label="New More" 
+            label="New More"
             {...a11yProps(2)}
             sx={{ position: "absolute", right: "30px" }}
-            
           />
-        <KeyboardArrowRightIcon sx={{position:'absolute' , right:'20px' , top:'12px'}}/>
-
+          <KeyboardArrowRightIcon
+            sx={{ position: "absolute", right: "20px", top: "12px" }}
+          />
         </Tabs>
-
       </Box>
-
 
       <TabPanel value={value} index={0}>
         <Box sx={{ width: "100%" }}>
           <Stack spacing={2} sx={{ display: "flex" }}>
-           
-          <Item sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Item sx={{ display: "flex", justifyContent: "space-between" }}>
               <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                 <img src="http://placekitten.com/g/70/70" />
                 <Box sx={{ marginLeft: "15px" }}>
@@ -98,12 +109,14 @@ export default function BasicTabs() {
                 </Box>
               </Box>
 
-              <Typography sx={{ alignSelf: "center"}}>
+              <Typography sx={{ alignSelf: "center" }}>
                 $100
                 {/* {this.props.text.split("$100").map((i, key) => {
                     return <div key={key}>{i}</div>;
                 })} */}
-                <KeyboardArrowRightIcon sx={{textAlign:'center' , marginBottom:'-6px'}}/>
+                <KeyboardArrowRightIcon
+                  sx={{ textAlign: "center", marginBottom: "-6px" }}
+                />
               </Typography>
             </Item>
 
@@ -123,7 +136,9 @@ export default function BasicTabs() {
                 {/* {this.props.text.split("$100").map((i, key) => {
                     return <div key={key}>{i}</div>;
                 })} */}
-                <KeyboardArrowRightIcon sx={{textAlign:'center' , marginBottom:'-6px'}}/>
+                <KeyboardArrowRightIcon
+                  sx={{ textAlign: "center", marginBottom: "-6px" }}
+                />
               </Typography>
             </Item>
 
@@ -143,7 +158,9 @@ export default function BasicTabs() {
                 {/* {this.props.text.split("$100").map((i, key) => {
                     return <div key={key}>{i}</div>;
                 })} */}
-                <KeyboardArrowRightIcon sx={{textAlign:'center' , marginBottom:'-6px'}}/>
+                <KeyboardArrowRightIcon
+                  sx={{ textAlign: "center", marginBottom: "-6px" }}
+                />
               </Typography>
             </Item>
 
@@ -163,7 +180,9 @@ export default function BasicTabs() {
                 {/* {this.props.text.split("$100").map((i, key) => {
                     return <div key={key}>{i}</div>;
                 })} */}
-                <KeyboardArrowRightIcon sx={{textAlign:'center' , marginBottom:'-6px'}}/>
+                <KeyboardArrowRightIcon
+                  sx={{ textAlign: "center", marginBottom: "-6px" }}
+                />
               </Typography>
             </Item>
 
@@ -183,7 +202,9 @@ export default function BasicTabs() {
                 {/* {this.props.text.split("$100").map((i, key) => {
                     return <div key={key}>{i}</div>;
                 })} */}
-                <KeyboardArrowRightIcon sx={{textAlign:'center' , marginBottom:'-6px'}}/>
+                <KeyboardArrowRightIcon
+                  sx={{ textAlign: "center", marginBottom: "-6px" }}
+                />
               </Typography>
             </Item>
 
@@ -203,7 +224,9 @@ export default function BasicTabs() {
                 {/* {this.props.text.split("\n").map((i, key) => {
                     return <div key={key}>{i}</div>;
                 })} */}
-                <KeyboardArrowRightIcon sx={{textAlign:'center' , marginBottom:'-6px'}}/>
+                <KeyboardArrowRightIcon
+                  sx={{ textAlign: "center", marginBottom: "-6px" }}
+                />
               </Typography>
             </Item>
           </Stack>

@@ -8,11 +8,12 @@ export default function TotalAdminsCard({ totalAdmins = "NaN" }) {
   return (
     <Stack spacing={3} paddingY={5} paddingX={4} 
       sx={{
-        width: "300px",
+        width: "100%",
         border: "1px solid rgba(109, 125, 147, 0.15)",
         boxShadow: "4px 4px 20px -10px rgba(0, 0, 0, 0.1)",
         borderRadius: "12px",
-        
+        bgcolor:"white",
+        maxHeight:"265px"
       }}
     >
       <Typography variant="body2" sx={{ color: "#6D7D93" }} >
