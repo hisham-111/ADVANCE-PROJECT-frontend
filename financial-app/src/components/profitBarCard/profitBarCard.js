@@ -3,13 +3,13 @@ import { Stack } from "@mui/system";
 import ArrowDropUpRoundedIcon from "@mui/icons-material/ArrowDropUpRounded";
 import React from "react";
 
-export default function profitBar({ goalProfit, realProfit }) {
+export default function profitBar({ goalProfit, realProfit, width }) {
   const progress = (realProfit / goalProfit) * 100;
 
   return (
     <Box
       sx={{
-        width: "29%",
+        width: {width},
         padding: "24px",
         border: "1px solid rgba(109, 125, 147, 0.15)",
         boxShadow: "4px 4px 20px -10px rgba(0, 0, 0, 0.1)",

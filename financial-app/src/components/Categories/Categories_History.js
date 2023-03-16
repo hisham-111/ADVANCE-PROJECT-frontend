@@ -38,7 +38,7 @@ export const data = {
   
 
 
-export function Categories_History() {
+export function CategoriesHistory() {
   const [value, setValue] = React.useState('one');
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -71,4 +71,4 @@ export function Categories_History() {
   ); 
 }
 
-export default Categories_History;
+export default CategoriesHistory;
