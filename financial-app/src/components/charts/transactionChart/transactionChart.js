@@ -1,88 +1,80 @@
-import { Box } from "@mui/system";
-import {React, useState, useEffect} from "react";
-import { Bar,Doughnut, Line } from "react-chartjs-2";
+import React from "react";
 import {
   Chart as ChartJS,
-  CategoryScale,
   LinearScale,
+  CategoryScale,
+  BarElement,
   PointElement,
   LineElement,
-  BarElement,
-  ArcElement,
-  LineController,
-  Title,
-  Tooltip,
   Legend,
+  Tooltip,
+  LineController,
+  BarController,
 } from "chart.js";
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  ArcElement,
-  LineController,
+import { Chart } from "react-chartjs-2";
 
-  Title,
-  Tooltip,
-  Legend,
+ChartJS.register(
+  LinearScale,
+  CategoryScale,
+  BarElement,
   PointElement,
   LineElement,
-  
+  Legend,
+  Tooltip,
+  LineController,
+  BarController
 );
 
+const labels = ["January", "February", "March", "April", "May", "June", "July"];
+
+const data = {
+  labels,
+  datasets: [
+    {
+      borderRadius: Number.MAX_VALUE,
+      type: "bar",
+      label: "Income",
+      backgroundColor: "rgba(255, 99, 132)",
+      data: [0, 10, 5, 2, 20, 30, 45],
+      borderColor: "white",
+      borderWidth: 2,
+    },
+    {
+      borderRadius: Number.MAX_VALUE,
+      type: "bar",
+      label: "Outcome",
+      backgroundColor: "rgba(53, 162, 235)",
+      data: [0, 10, 5, 2, 20, 30, 45],
+    },
+  ],
+};
 
 
-export default function transactionChart() {
-    //     const [chartData, setChartData] = useState({});
-  
-//     useEffect(() => {
-    //   const fetchData = async () => {
-    //     const response = await fetch('/api/monthly-balance-history');
-    //     const data = await response.json();
-        // const dates = data.map((item) => item.start_date);
-        // const balances = data.map((item) => item.balance);
-  
-        // setChartData({
-        //   labels: dates,
-        //   datasets: [
-        //     {
-        //       label: 'Monthly Balance',
-        //       data: balances,
-        //       backgroundColor: 'rgba(75,192,192,0.4)',
-        //       borderColor: 'rgba(75,192,192,1)',
-        //       borderWidth: 1,
-        //     },
-        //   ],
-        // });
-    //   };
-  
-    //   fetchData();
-    // }, []);
-    const labels = ["January", "February", "March", "April", "May", "June"];
+export default function TransactionChart() {
+  //   const [chartData, setChartData] = useState({});
 
-    const data = {
-      labels: labels,
-      datasets: [
-        {
-          
-          backgroundColor: "#037BCB",
-          borderColor: "#037BCB",
-          data: [0, 10, 5, 2, 20, 30, 45],
-          
-        },
-      ],
-    };
-    const options = {
-        responsive: true,
-        plugins: {
-          legend: {
-            display: false,
-          },
-        },}
-    
-  return (
-<Box>
-      
-      <Bar data={data} options={options} />
-          </Box>  )
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const response = await fetch('/api/monthly-balance-history');
+  //     const data = await response.json();
+  //     const dates = data.map((item) => item.start_date);
+  //     const balances = data.map((item) => item.balance);
+
+  //     setChartData({
+  //       labels: dates,
+  //       datasets: [
+  //         {
+  //           label: 'Monthly Balance',
+  //           data: balances,
+  //           backgroundColor: 'rgba(75,192,192,0.4)',
+  //           borderColor: 'rgba(75,192,192,1)',
+  //           borderWidth: 1,
+  //         },
+  //       ],
+  //     });
+  //   };
+
+  //   fetchData();
+  // }, []);
+  return <Chart type="bar" data={data} />;
 }
-
