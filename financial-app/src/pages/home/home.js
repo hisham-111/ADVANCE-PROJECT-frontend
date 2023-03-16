@@ -39,7 +39,7 @@ export default function home() {
                 currency="$"
               />
             </Stack>
-            <ProfitBarCard realProfit={20} goalProfit={30} />
+            <ProfitBarCard realProfit={20} goalProfit={30} width="29%"/>
           </Stack>
           <Stack direction="row" justifyContent="space-between">
           <TransactionHistory />

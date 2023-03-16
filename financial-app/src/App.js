@@ -20,7 +20,7 @@ function App() {
   return (
     <div className="App">
 
-          <ColorModeContext.Provider value={colorMode}>
+          {/* <ColorModeContext.Provider value={colorMode}> */}
           {/* <ThemeProvider theme={theme}> */}
           <CssBaseline />
 
