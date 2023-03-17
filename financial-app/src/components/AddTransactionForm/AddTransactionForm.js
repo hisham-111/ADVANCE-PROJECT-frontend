@@ -53,7 +53,8 @@ export default function AddTransactionForm() {
 
   const [selectedCurrency, setSelectedCurrency] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
-  // const [selectedTitle, setSelectedTitle] = useState('');
+  const [selectedTitle, setSelectedTitle] = useState('');
+  const [fixedKey, setFixedKey] = useState([]);
 
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
@@ -73,6 +74,7 @@ export default function AddTransactionForm() {
     
 
   }
+  // >>>>>> Submit Recurring Transaction
   const handleRecurringSubmit = (event) => {
     event.preventDefault();
     const data = {
@@ -90,6 +92,19 @@ export default function AddTransactionForm() {
       .then(response => {
         // Handle success response
         console.log(response);
+
+        // >> RESET THE INPUTS
+        setTitle([])
+        setTypeCode('')
+        SetCurrencies([])
+        setEndDate('')
+        setStartDate('')
+        setEndDate('')
+        setAmount(0);
+        setSelectedCategory('');
+        setSelectedCurrency('');
+        setDescription('');
+        
       })
       .catch(error => {
         // Handle error response
@@ -97,18 +112,15 @@ export default function AddTransactionForm() {
       });
   };
   
-  // Function to format date
+  // >>>>>>> Function to format date
   const formatDate = (date) => {
     const formattedDate = new Date(date).toISOString().slice(0,10);
     return formattedDate;
   };
   
   
-  
-  
-  
-  
-//>>>>>>>>>>>>>>>>>>>> Fetching Currency
+
+//>>>>>>>>>>>>>> Fetching Currency
   useEffect(() => {
     axios.get('http://localhost:8000/api/currency')
       .then(response => {
@@ -119,6 +131,8 @@ export default function AddTransactionForm() {
         console.log(error);
       });
   },[]);
+
+
 //>>>>>>>>>>>>>>>>>>>>> Fetching Categories
   useEffect(() => {
     axios.get('http://localhost:8000/api/categories')
@@ -130,30 +144,32 @@ export default function AddTransactionForm() {
         console.log(error);
       });
   },[]);
-//>>>>>>>>>>>>>>>>>>>>> Fetching Key
-  // useMemo(() => {
-  //   axios.get('http://localhost:8000/api/key')
-  //     .then(response => {
-  //       setTitle(response.data.key);
-  //       console.log(response.data.key);
-  //     })
-  //     .catch(error => {
-  //       console.log(error);
-  //     });
-  // },[]);
 
- const key = [
-    {
-      id:"1",
-      name:"azzam",
-      description:"azzam description"
-    },
-    {
-      id:"2",
-      name:"hisham",
-      description:"hisham description"
-    }
-  ]
+
+//>>>>>>>>>>>>>>>>>>>>> Fetching Key
+useEffect(() => {
+  axios.get('http://localhost:8000/api/key')
+    .then(response => {
+      setFixedKey(response.data.key);
+      console.log(response.data);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+}, []);
+
+//  const key = [
+//     {
+//       id:"1",
+//       name:"azzam",
+//       description:"azzam description"
+//     },
+//     {
+//       id:"2",
+//       name:"hisham",
+//       description:"hisham description"
+//     }
+//   ]
   // const categories = [
   //   {
   //     id: "1",
@@ -192,26 +208,28 @@ export default function AddTransactionForm() {
         <Stack  display="flex" flexDirection="row" justifyContent="space-between">
         {/* <TextField variant='outlined' label="Title" type="text" size="10" required style={{width:"70%"}}/> */}
 
-        <FormControl style={{width:"70%"}}>
-        <InputLabel id="title-select-label">Title</InputLabel>
-          <Select
-            labelId="title-select-label"
-            id="title-select"
-            value={title}
-            label="title"
-            onChange={(event) => {
-              setTitle(event.target.value);
-              setDescription(key.find((key) => key.title === event.target.value).description);
-            }}
-            required
-          >
-            {Array.isArray(key) && key.map((key) => (
-              <MenuItem key={key.id} value={key.id}>
-                {key.title}
-              </MenuItem>
-            ))}
-          </Select>
-      </FormControl>
+        <FormControl style={{ width: '70%' }}>
+      <InputLabel id="title-select-label">Title</InputLabel>
+      <Select
+        labelId="title-select-label"
+        id="title-select"
+        value={fixedKey}
+        label="title"
+        onChange={(event) => {
+          setTitle(event.target.value);
+          setDescription(
+            fixedKey.find((key) => key.title === event.target.value).description
+          );
+        }}
+        required
+      >
+        {Array.isArray(fixedKey) && fixedKey.map((key) => (
+          <MenuItem key={key.id} value={key.title}>
+            {key.title}
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
 
         <FormControl  style={{width:"25%" ,margin:"0"}}>
           <InputLabel id="schedule-select-label" >Schedule</InputLabel>
