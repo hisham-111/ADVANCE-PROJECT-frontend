@@ -80,7 +80,7 @@ export default function AddAdmin() {
         }}
         startIcon={<AddRoundedIcon />}>
 
-        Add Admin
+        Add New Admin
       </Button>
       <Dialog open={open} onClose={handleClose} >
         <DialogTitle style={{textAlign:"center", fontWeight:"600",color:"#394452"}}>Add New <Box display="inline" style={{color:'#026FC2'}}>Admin</Box></DialogTitle>
