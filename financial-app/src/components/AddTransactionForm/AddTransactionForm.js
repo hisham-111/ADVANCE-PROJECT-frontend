@@ -213,10 +213,10 @@ useEffect(() => {
       <Select
         labelId="title-select-label"
         id="title-select"
-        value={fixedKey}
+        value={selectedTitle}
         label="title"
         onChange={(event) => {
-          setTitle(event.target.value);
+          setSelectedTitle(event.target.value);
           setDescription(
             fixedKey.find((key) => key.title === event.target.value).description
           );
