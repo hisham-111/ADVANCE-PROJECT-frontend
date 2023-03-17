@@ -53,7 +53,7 @@ export default function AddTransactionForm() {
 
   const [selectedCurrency, setSelectedCurrency] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
-  const [selectedTitle, setSelectedTitle] = useState('');
+  // const [selectedTitle, setSelectedTitle] = useState('');
 
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
@@ -73,18 +73,41 @@ export default function AddTransactionForm() {
     
 
   }
-  function handleRecurringSubmit(event){
+  const handleRecurringSubmit = (event) => {
     event.preventDefault();
-    console.log("formData",title)
-    console.log("formData",startDate)
-    console.log("formData",endDate)
-    console.log("formData",typeCode)
-    console.log("formData",categories)
-    console.log("formData",amount)
-    console.log("formData",selectedCurrency)
-    console.log("formData",description)
-    setAmount('');
-  }
+    const data = {
+      title: title,
+      start_date: formatDate(startDate),
+      end_date: formatDate(endDate),
+      type_code: typeCode,
+      category_id: selectedCategory,
+      amount: amount,
+      currency_id: selectedCurrency,
+      description: description,
+    };
+  
+    axios.post('http://localhost:8000/api/recurrings', data)
+      .then(response => {
+        // Handle success response
+        console.log(response);
+      })
+      .catch(error => {
+        // Handle error response
+        console.error(error);
+      });
+  };
+  
+  // Function to format date
+  const formatDate = (date) => {
+    const formattedDate = new Date(date).toISOString().slice(0,10);
+    return formattedDate;
+  };
+  
+  
+  
+  
+  
+  
 //>>>>>>>>>>>>>>>>>>>> Fetching Currency
   useEffect(() => {
     axios.get('http://localhost:8000/api/currency')
@@ -183,7 +206,7 @@ export default function AddTransactionForm() {
             required
           >
             {Array.isArray(key) && key.map((key) => (
-              <MenuItem key={key.id} value={key.title}>
+              <MenuItem key={key.id} value={key.id}>
                 {key.title}
               </MenuItem>
             ))}
@@ -236,7 +259,7 @@ export default function AddTransactionForm() {
                   label="Currency"
                   onChange={(event) =>{  setSelectedCurrency(event.target.value)}}>
                   {Array.isArray(currencies) && currencies.map((currencies) => (
-                  <MenuItem key={currencies.id} value={currencies.name}>
+                  <MenuItem key={currencies.id} value={currencies.id}>
                     {currencies.name}
                   </MenuItem>
                 ))}
@@ -253,7 +276,7 @@ export default function AddTransactionForm() {
                 required
               >
                 {Array.isArray(categories) && categories.filter(categories => categories.type_code === typeCode).map((categories) => (
-                <MenuItem key={categories.id} value={categories.name}>
+                <MenuItem key={categories.id} value={categories.id}>
                   {categories.name}
                 </MenuItem>
               ))}
@@ -360,7 +383,7 @@ export default function AddTransactionForm() {
                 required
               >
                 {Array.isArray(categories) && categories.filter(categories => categories.type_code === typeCode).map((categories) => (
-                <MenuItem key={categories.id} value={categories.name}>
+                <MenuItem key={categories.id} value={categories.id}>
                   {categories.name}
                 </MenuItem>
               ))}
@@ -381,7 +404,7 @@ export default function AddTransactionForm() {
                   label="Currency"
                   onChange={(event) =>{  setSelectedCurrency(event.target.value)}}>
                   {Array.isArray(currencies) && currencies.map((currencies) => (
-                  <MenuItem key={currencies.id} value={currencies.name}>
+                  <MenuItem key={currencies.id} value={currencies.id}>
                     {currencies.name}
                   </MenuItem>
                 ))}
