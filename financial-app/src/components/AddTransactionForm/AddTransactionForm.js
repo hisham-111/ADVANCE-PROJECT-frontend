@@ -49,11 +49,12 @@ export default function AddTransactionForm() {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
 
-  //Select the comboBoxes
+  // >>>>>>> Select From ComboBoxes
 
   const [selectedCurrency, setSelectedCurrency] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedTitle, setSelectedTitle] = useState('');
+
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -61,7 +62,7 @@ export default function AddTransactionForm() {
   function handleFixedSubmit(event) {
     event.preventDefault();
     console.log('Form submitted!');
-    console.log('Title:', selectedTitle);
+    console.log('Title:', title);
     console.log('Schedule:', schedule);
     console.log('Start date:', startDate);
     console.log('Type code:', typeCode);
@@ -84,7 +85,7 @@ export default function AddTransactionForm() {
     console.log("formData",description)
     setAmount('');
   }
-
+//>>>>>>>>>>>>>>>>>>>> Fetching Currency
   useEffect(() => {
     axios.get('http://localhost:8000/api/currency')
       .then(response => {
@@ -95,7 +96,7 @@ export default function AddTransactionForm() {
         console.log(error);
       });
   },[]);
-
+//>>>>>>>>>>>>>>>>>>>>> Fetching Categories
   useEffect(() => {
     axios.get('http://localhost:8000/api/categories')
       .then(response => {
@@ -106,17 +107,17 @@ export default function AddTransactionForm() {
         console.log(error);
       });
   },[]);
-
-  useEffect(() => {
-    axios.get('http://localhost:8000/api/key')
-      .then(response => {
-        setTitle(response.data);
-        console.log(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  },[]);
+//>>>>>>>>>>>>>>>>>>>>> Fetching Key
+  // useMemo(() => {
+  //   axios.get('http://localhost:8000/api/key')
+  //     .then(response => {
+  //       setTitle(response.data.key);
+  //       console.log(response.data.key);
+  //     })
+  //     .catch(error => {
+  //       console.log(error);
+  //     });
+  // },[]);
 
  const key = [
     {
@@ -176,7 +177,7 @@ export default function AddTransactionForm() {
             value={title}
             label="title"
             onChange={(event) => {
-              setSelectedTitle(event.target.value);
+              setTitle(event.target.value);
               setDescription(key.find((key) => key.title === event.target.value).description);
             }}
             required
