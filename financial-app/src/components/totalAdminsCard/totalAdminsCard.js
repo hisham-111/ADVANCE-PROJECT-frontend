@@ -3,7 +3,7 @@ import { Stack } from "@mui/system";
 import React from "react";
 import PermIdentityRoundedIcon from "@mui/icons-material/PermIdentityRounded";
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
-
+import AddAdmin from '../AddAdmin/AddAdmin'
 export default function TotalAdminsCard({ totalAdmins = "NaN" }) {
   return (
     <Stack spacing={3} paddingY={5} paddingX={4} 
@@ -29,7 +29,7 @@ export default function TotalAdminsCard({ totalAdmins = "NaN" }) {
         </Typography>
         <PermIdentityRoundedIcon fontSize="large" sx={{ color: "#6D7D93" }} />
       </Stack>
-      <Button
+      {/* <Button
         variant="contained"
         size="large"
         sx={{
@@ -40,7 +40,8 @@ export default function TotalAdminsCard({ totalAdmins = "NaN" }) {
         startIcon={<AddRoundedIcon />}
       >
         Add New Admin
-      </Button>
+      </Button> */}
+      <AddAdmin />
     </Stack>
   );
 }
