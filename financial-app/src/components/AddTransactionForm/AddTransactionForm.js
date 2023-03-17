@@ -62,17 +62,38 @@ export default function AddTransactionForm() {
 
   function handleFixedSubmit(event) {
     event.preventDefault();
-    console.log('Form submitted!');
-    console.log('Title:', title);
-    console.log('Schedule:', schedule);
-    console.log('Start date:', startDate);
-    console.log('Type code:', typeCode);
-    console.log('Amount:', amount);
-    console.log('Currency:', selectedCurrency);
-    console.log('Category:', categories);
-    console.log('Description:', description);
-    
 
+    // Create an object to store the form data
+    const formData = {
+      fixed_key_id: selectedTitle,
+      schedule: schedule,
+      start_date: formatDate(startDate),
+      typeCode: typeCode,
+      amount: amount,
+      currency: selectedCurrency,
+      category: selectedCategory,
+      description: description,
+      currency_id: selectedCurrency,
+      category_id: selectedCategory,
+    };
+  
+    // Send the form data to the server
+    axios.post('http://localhost:8000/api/fixedtransaction', formData)
+      .then((response) => {
+        console.log(response.data);
+        // Reset the form fields after successful submission
+        setSelectedTitle('');
+        setSchedule('');
+        setStartDate('');
+        setTypeCode('');
+        setAmount('');
+        setSelectedCurrency('');
+        setSelectedCategory('');
+        setDescription('');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
   // >>>>>> Submit Recurring Transaction
   const handleRecurringSubmit = (event) => {
@@ -224,7 +245,7 @@ useEffect(() => {
         required
       >
         {Array.isArray(fixedKey) && fixedKey.map((key) => (
-          <MenuItem key={key.id} value={key.title}>
+          <MenuItem key={key.id} value={key.id}>
             {key.title}
           </MenuItem>
         ))}
@@ -241,9 +262,9 @@ useEffect(() => {
               onChange={(event) =>{setSchedule(event.target.value)}}
               required >
                   
-              <MenuItem value="Weekly">Weekly</MenuItem>
-              <MenuItem value="Monthly">Monthly</MenuItem>
-              <MenuItem value="Yearly">Yearly</MenuItem>
+              <MenuItem value="weekly">Weekly</MenuItem>
+              <MenuItem value="monthly">Monthly</MenuItem>
+              <MenuItem value="yearly">Yearly</MenuItem>
             </Select>
        </FormControl>
        </Stack>
