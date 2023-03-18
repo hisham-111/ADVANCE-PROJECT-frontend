@@ -1,9 +1,9 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { FormControl, InputLabel, Select, MenuItem,TextField, Button,Typography,Box, Tabs, Tab} from '@mui/material';
-import { useState } from 'react';
+import { useState, useEffect,useMemo } from 'react';
 import { Stack } from '@mui/system';
-
+import axios from 'axios';
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -39,15 +39,22 @@ function a11yProps(index) {
 
 export default function AddTransactionForm() {
   const [value, setValue] = useState(0);
-  const [TypeCode, setTypeCode] = useState('');
-  const [currency,SetCurrency] = useState('');
+  const [typeCode, setTypeCode] = useState('');
+  const [currencies,SetCurrencies] = useState([]);
   const [amount, setAmount] = useState(0);
   const [schedule, setSchedule] = useState('');
   const [description, setDescription] = useState('');
-  const [category, setCategory] = useState('');
-  const [title, setTitle] = useState('');
+  const [categories, setCategories] = useState([]);
+  const [title, setTitle] = useState([]);
   const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('')
+  const [endDate, setEndDate] = useState('');
+
+  // >>>>>>> Select From ComboBoxes
+
+  const [selectedCurrency, setSelectedCurrency] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedTitle, setSelectedTitle] = useState('');
+  const [fixedKey, setFixedKey] = useState([]);
 
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
@@ -55,83 +62,152 @@ export default function AddTransactionForm() {
 
   function handleFixedSubmit(event) {
     event.preventDefault();
-    console.log('Form submitted!');
-    console.log('Title:', title);
-    console.log('Schedule:', schedule);
-    console.log('Start date:', startDate);
-    console.log('Type code:', TypeCode);
-    console.log('Amount:', amount);
-    console.log('Currency:', currency);
-    console.log('Category:', category);
-    console.log('Description:', description);
 
+    // Create an object to store the form data
+    const formData = {
+      fixed_key_id: selectedTitle,
+      schedule: schedule,
+      start_date: formatDate(startDate),
+      typeCode: typeCode,
+      amount: amount,
+      currency: selectedCurrency,
+      category: selectedCategory,
+      description: description,
+      currency_id: selectedCurrency,
+      category_id: selectedCategory,
+    };
+  
+    // Send the form data to the server
+    axios.post('http://localhost:8000/api/fixedtransaction', formData)
+      .then((response) => {
+        console.log(response.data);
+        // Reset the form fields after successful submission
+        setSelectedTitle('');
+        setSchedule('');
+        setStartDate('');
+        setTypeCode('');
+        setAmount('');
+        setSelectedCurrency('');
+        setSelectedCategory('');
+        setDescription('');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
-  function handleRecurringSubmit(event){
+  // >>>>>> Submit Recurring Transaction
+  const handleRecurringSubmit = (event) => {
     event.preventDefault();
-    console.log("formData",title)
-    console.log("formData",startDate)
-    console.log("formData",endDate)
-    console.log("formData",TypeCode)
-    console.log("formData",category)
-    console.log("formData",amount)
-    console.log("formData",currency)
-    console.log("formData",description)
-  }
+    const data = {
+      title: title,
+      start_date: formatDate(startDate),
+      end_date: formatDate(endDate),
+      type_code: typeCode,
+      category_id: selectedCategory,
+      amount: amount,
+      currency_id: selectedCurrency,
+      description: description,
+    };
+  
+    axios.post('http://localhost:8000/api/recurrings', data)
+      .then(response => {
+        // Handle success response
+        console.log(response);
 
+        // >> RESET THE INPUTS
+        setTitle([])
+        setTypeCode('')
+        SetCurrencies([])
+        setEndDate('')
+        setStartDate('')
+        setEndDate('')
+        setAmount(0);
+        setSelectedCategory('');
+        setSelectedCurrency('');
+        setDescription('');
+        
+      })
+      .catch(error => {
+        // Handle error response
+        console.error(error);
+      });
+  };
+  
+  // >>>>>>> Function to format date
+  const formatDate = (date) => {
+    const formattedDate = new Date(date).toISOString().slice(0,10);
+    return formattedDate;
+  };
+  
   
 
- const Key = [
-    {
-      id:"1",
-      name:"azzam",
-      description:"azzam description"
-    },
-    {
-      id:"2",
-      name:"hisham",
-      description:"hisham description"
-    }
-  ]
-  const categories = [
-    {
-      id: "1",
-      name: "habibi",
-      typeCode: "Incomes"
-    },
-    {
-      id: "2",
-      name: "azzam",
-      typeCode: "Expenses"
-    },
-    {
-      id: "3",
-      name: "xyz",
-      typeCode: "Incomes"
-    },
-  ]
-  const currencies = [
-    {
-      id: "1",
-      name:"$",
-      rate:"80000"
-    },
-    {
-      id: "2",
-      name:"L.L.",
-      rate:"1"
-    },
-    {
-      id: "3",
-      name:"azzam",
-      rate:"32"
-    }
-    
-  ]
+//>>>>>>>>>>>>>> Fetching Currency
+  useEffect(() => {
+    axios.get('http://localhost:8000/api/currency')
+      .then(response => {
+        SetCurrencies(response.data.currencies);
+        console.log(response.data.currencies);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  },[]);
 
-  
 
-  
+//>>>>>>>>>>>>>>>>>>>>> Fetching Categories
+  useEffect(() => {
+    axios.get('http://localhost:8000/api/categories')
+      .then(response => {
+        setCategories(response.data.categories);
+        console.log(response.data.categories);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  },[]);
 
+
+//>>>>>>>>>>>>>>>>>>>>> Fetching Key
+useEffect(() => {
+  axios.get('http://localhost:8000/api/key')
+    .then(response => {
+      setFixedKey(response.data.key);
+      console.log(response.data);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+}, []);
+
+//  const key = [
+//     {
+//       id:"1",
+//       name:"azzam",
+//       description:"azzam description"
+//     },
+//     {
+//       id:"2",
+//       name:"hisham",
+//       description:"hisham description"
+//     }
+//   ]
+  // const categories = [
+  //   {
+  //     id: "1",
+  //     name: "habibi",
+  //     typeCode: "Incomes"
+  //   },
+  //   {
+  //     id: "2",
+  //     name: "azzam",
+  //     typeCode: "Expenses"
+  //   },
+  //   {
+  //     id: "3",
+  //     name: "xyz",
+  //     typeCode: "Incomes"
+  //   },
+  // ]
   
 
   return (
@@ -153,26 +229,28 @@ export default function AddTransactionForm() {
         <Stack  display="flex" flexDirection="row" justifyContent="space-between">
         {/* <TextField variant='outlined' label="Title" type="text" size="10" required style={{width:"70%"}}/> */}
 
-        <FormControl style={{width:"70%"}}>
-        <InputLabel id="title-select-label">title</InputLabel>
-          <Select
-            labelId="title-select-label"
-            id="title-select"
-            value={title}
-            label="title"
-            onChange={(event) => {
-              setTitle(event.target.value);
-              setDescription(Key.find((key) => key.name === event.target.value).description);
-            }}
-            required
-          >
-            {Key.map((key) => (
-              <MenuItem key={key.id} value={key.name}>
-                {key.name}
-              </MenuItem>
-            ))}
-          </Select>
-      </FormControl>
+        <FormControl style={{ width: '70%' }}>
+      <InputLabel id="title-select-label">Title</InputLabel>
+      <Select
+        labelId="title-select-label"
+        id="title-select"
+        value={selectedTitle}
+        label="title"
+        onChange={(event) => {
+          setSelectedTitle(event.target.value);
+          setDescription(
+            fixedKey.find((key) => key.title === event.target.value).description
+          );
+        }}
+        required
+      >
+        {Array.isArray(fixedKey) && fixedKey.map((key) => (
+          <MenuItem key={key.id} value={key.id}>
+            {key.title}
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
 
         <FormControl  style={{width:"25%" ,margin:"0"}}>
           <InputLabel id="schedule-select-label" >Schedule</InputLabel>
@@ -184,9 +262,9 @@ export default function AddTransactionForm() {
               onChange={(event) =>{setSchedule(event.target.value)}}
               required >
                   
-              <MenuItem value="Weekly">Weekly</MenuItem>
-              <MenuItem value="Monthly">Monthly</MenuItem>
-              <MenuItem value="Yearly">Yearly</MenuItem>
+              <MenuItem value="weekly">Weekly</MenuItem>
+              <MenuItem value="monthly">Monthly</MenuItem>
+              <MenuItem value="yearly">Yearly</MenuItem>
             </Select>
        </FormControl>
        </Stack>
@@ -198,12 +276,12 @@ export default function AddTransactionForm() {
           <Select
             labelId="TypeCode-select-label"
             id="TypeCode-select"
-            value={TypeCode}
+            value={typeCode}
              label="TypeCode"
              required
           onChange={(event) =>{  setTypeCode(event.target.value)}}>
-            <MenuItem value="Incomes">Income</MenuItem>
-            <MenuItem value="Expenses">Expenses</MenuItem>
+            <MenuItem value="incomes">Income</MenuItem>
+            <MenuItem value="expenses">Expenses</MenuItem>
             </Select>
         </FormControl>
         </Stack>
@@ -211,34 +289,34 @@ export default function AddTransactionForm() {
         <Stack  display="flex" flexDirection="row" justifyContent="space-between">
             <TextField required type="number" variant='outlined' value={amount} label='Amount'  onChange={(event) =>{  setAmount(event.target.value)}} inputProps={{steps:10 }} style={{width:"45%"}}/>  { /*set the increment/decrement step to 100*/}
             <FormControl style={{width:"25%"}}> 
-              <InputLabel>Currency</InputLabel>
-              <Select
-                required
-                labelId="Currency-select-label"
-                id="Currency-select"
-                value={currency}
-                label="Currency"
-                onChange={(event) =>{  SetCurrency(event.target.value)}}>
-                {currencies.map((currencies) => (
-                <MenuItem key={currencies.id} value={currencies.name}>
-                  {currencies.name}
-                </MenuItem>
-              ))}
-                </Select>
+             <InputLabel>Currency</InputLabel>
+                <Select
+                  required
+                  labelId="Currency-select-label"
+                  id="Currency-select"
+                  value={selectedCurrency}
+                  label="Currency"
+                  onChange={(event) =>{  setSelectedCurrency(event.target.value)}}>
+                  {Array.isArray(currencies) && currencies.map((currencies) => (
+                  <MenuItem key={currencies.id} value={currencies.id}>
+                    {currencies.name}
+                  </MenuItem>
+                ))}
+                  </Select>
             </FormControl>
             <FormControl style={{width:"25%"}}>
-            <InputLabel id="category-select-label">Category</InputLabel>
+            <InputLabel id="categories-select-label">Category</InputLabel>
               <Select
-                labelId="category-select-label"
-                id="category-select"
-                value={category}
+                labelId="categories-select-label"
+                id="categories-select"
+                value={selectedCategory}
                 label="Category"
-                onChange={(event) =>{setCategory(event.target.value)}}
+                onChange={(event) =>{setSelectedCategory(event.target.value)}}
                 required
               >
-                {categories.filter(category => category.typeCode == TypeCode).map((category) => (
-                <MenuItem key={category.id} value={category.name}>
-                  {category.name}
+                {Array.isArray(categories) && categories.filter(categories => categories.type_code === typeCode).map((categories) => (
+                <MenuItem key={categories.id} value={categories.id}>
+                  {categories.name}
                 </MenuItem>
               ))}
 
@@ -320,51 +398,52 @@ export default function AddTransactionForm() {
 
           <Stack display="flex" flexDirection="row" justifyContent="space-between"> 
         <FormControl sx={{ width:"48%" }}> 
-          <InputLabel>TypeCode</InputLabel>
+        <InputLabel>TypeCode</InputLabel>
           <Select
             labelId="TypeCode-select-label"
             id="TypeCode-select"
-            value={TypeCode}
-            label="TypeCode"
-            onChange={(event) =>{  setTypeCode(event.target.value)}}
-            required>
-            <MenuItem value="Incomes">Income</MenuItem>
-            <MenuItem value="Expenses">Expenses</MenuItem>
+            value={typeCode}
+             label="TypeCode"
+             required
+          onChange={(event) =>{  setTypeCode(event.target.value)}}>
+            <MenuItem value="incomes">Income</MenuItem>
+            <MenuItem value="expenses">Expenses</MenuItem>
             </Select>
         </FormControl>
 
         <FormControl style={{width:"48%"}}>
-          <InputLabel id="category-select-label">Category</InputLabel>
-            <Select
-              labelId="category-select-label"
-              id="category-select"
-              value={category}
-              label="Category"
-              onChange={(event) =>{  setCategory(event.target.value)}}
-              required
-            >
-              {categories.filter(category => category.typeCode == TypeCode).map((category) => (
-              <MenuItem key={category.id} value={category.name}>
-                {category.name}
-              </MenuItem>
-            ))}
-              </Select>
+        <InputLabel id="categories-select-label">Category</InputLabel>
+              <Select
+                labelId="categories-select-label"
+                id="categories-select"
+                value={selectedCategory}
+                label="Category"
+                onChange={(event) =>{setSelectedCategory(event.target.value)}}
+                required
+              >
+                {Array.isArray(categories) && categories.filter(categories => categories.type_code === typeCode).map((categories) => (
+                <MenuItem key={categories.id} value={categories.id}>
+                  {categories.name}
+                </MenuItem>
+              ))}
+
+                </Select>
           </FormControl>
                 </Stack>
 
           <Stack display="flex" flexDirection="row" justifyContent="space-between">  
                   <TextField type="number" required  variant='outlined' value={amount} label='Amount'  onChange={(event) =>{  setAmount(event.target.value)}} inputProps={{steps:10 }} style={{width:"65%"}}/>  { /*set the increment/decrement step to 100*/}
-                  <FormControl style={{width:"30%"}}> 
+              <FormControl style={{width:"30%"}}> 
                 <InputLabel>Currency</InputLabel>
                 <Select
                   required
                   labelId="Currency-select-label"
                   id="Currency-select"
-                  value={currency}
+                  value={selectedCurrency}
                   label="Currency"
-                  onChange={(event) =>{  SetCurrency(event.target.value)}}>
-                  {currencies.map((currencies) => (
-                  <MenuItem key={currencies.id} value={currencies.name}>
+                  onChange={(event) =>{  setSelectedCurrency(event.target.value)}}>
+                  {Array.isArray(currencies) && currencies.map((currencies) => (
+                  <MenuItem key={currencies.id} value={currencies.id}>
                     {currencies.name}
                   </MenuItem>
                 ))}

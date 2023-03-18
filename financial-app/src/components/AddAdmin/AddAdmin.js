@@ -12,6 +12,8 @@ import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import AddRoundedIcon from '@mui/icons-material/AddRounded';
+
 export default function AddAdmin() {
   const [open, setOpen] = React.useState(false);
 
@@ -67,13 +69,22 @@ export default function AddAdmin() {
 
   return (
     <section >
-      <Button variant="contained" onClick={handleClickOpen} style={{fontWeight:"600", backgroundColor: "#026FC2"}}>
+      <Button variant="contained" onClick={handleClickOpen} 
+        size="large"
+        sx={{
+          borderRadius: "6px",
+          textTransform: "none",
+          padding: "14px 18px",
+          width:"100%",
+          fontWeight:"600",
+        }}
+        startIcon={<AddRoundedIcon />}>
 
-        Add Admin
+        Add New Admin
       </Button>
       <Dialog open={open} onClose={handleClose} >
         <DialogTitle style={{textAlign:"center", fontWeight:"600",color:"#394452"}}>Add New <Box display="inline" style={{color:'#026FC2'}}>Admin</Box></DialogTitle>
-        <DialogContent style={{display:"flex",alignItems:"center",flexDirection:"column",margin:"20px 10px",width:"500px",padding:""}}>
+        <DialogContent style={{display:"flex",alignItems:"center",flexDirection:"column",margin:"20px 10px",width:"500px"}}>
         <TextField
             autoFocus
             margin="dense"
@@ -103,20 +114,19 @@ export default function AddAdmin() {
             onChange={handleInputChange}
           />
            <TextField
-            autoFocus
-            margin="dense"
-            id="password"
-            label="Password"
-            type="password"
-            fullWidth
-            variant="outlined"
-            required
-            size="30"
-            error={formErrors.password !== ''}
-            helperText={formErrors.password}
-            onChange={handleInputChange}
-            eye={showPassword ? "text" : "password"}
-            InputProps={{
+              autoFocus
+              margin="dense"
+              id="password"
+              label="Password"
+              type={showPassword ? "text" : "password"} // use the showPassword state to toggle the input type
+              fullWidth
+              variant="outlined"
+              required
+              size="30"
+              error={formErrors.password !== ''}
+              helperText={formErrors.password}
+              onChange={handleInputChange}
+              InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
                     <IconButton onClick={handleClickShowPassword}>
@@ -125,9 +135,9 @@ export default function AddAdmin() {
                   </InputAdornment>
                 ),
               }}
-          />
+            />
         </DialogContent>
-        <DialogActions style={{display:"flex",flexDirection:"row", justifyContent:"space-around"}}>
+        <DialogActions style={{display:"flex",flexDirection:"row", justifyContent:"space-around",marginBottom:"20px"}}>
         <Button onClick={handleClose} 
         style={{ backgroundColor: "#FFF", width: "160px",borderRadius: '10px',color:"#026FC2",fontWeight:"600" }}  variant="outlined">Cancel</Button>
 
