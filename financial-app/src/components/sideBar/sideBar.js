@@ -19,6 +19,7 @@ import {
   Menu as MenuIcon,
   Help as HelpIcon,
   Logout as LogoutIcon,
+  AddBox as AddBoxIcon,
 } from "@mui/icons-material";
 import { Box } from "@mui/system";
 import Logo from "../../assets/images/logo.svg";
@@ -52,6 +53,11 @@ function Sidebar() {
       icon: <StatisticsIcon />,
       path: "/statistics",
     },
+    {
+      text: "Add Transaction",
+      icon: <AddBoxIcon />,
+      path: "/addtransactionpage"
+    }
   ];
 
   const drawer = (

@@ -211,7 +211,8 @@ useEffect(() => {
   
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box sx={{ width: '100%', backgroundColor:"white", borderRadius:"10px",padding:"10px",border: "1px solid rgba(109, 125, 147, 0.15)",
+    boxShadow: "4px 4px 20px -1px rgba(0, 0, 0, 0.1)"}}>
   <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
     <Typography style={{ fontWeight: '600', color: '#394452', fontSize: '27px',paddingTop:"6px",paddingLeft:"8px" }}>
       Add New <Box display="inline" style={{ color: '#026FC2' }}>Transaction</Box>
