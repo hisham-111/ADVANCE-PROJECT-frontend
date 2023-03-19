@@ -1,8 +1,8 @@
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import { Box, Button, Divider, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
-import { React, useState } from "react";
-
+import { React, useState,useEffect } from "react";
+import axios from 'axios';
 export default function AdminsCard() {
     const [admins, setAdmins]=useState([
         {
@@ -42,7 +42,20 @@ export default function AdminsCard() {
   //       console.log(error);
   //     });
   // };
-  
+  useEffect(() => {
+    axios.get('http://localhost:8000/api/auth/admins',{
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+      }
+    })
+      .then(response => {
+        setAdmins(response.data);
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  },[admins]);
 
   return (
     
@@ -83,7 +96,7 @@ export default function AdminsCard() {
                   </Box>
                   <Stack>
                     <Typography sx={{ fontWeight: "bold"}}>
-                      {item.userName}
+                      {item.email}
                     </Typography>
                     <Typography
                       sx={{

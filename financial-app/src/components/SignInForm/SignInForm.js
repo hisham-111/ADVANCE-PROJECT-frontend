@@ -34,6 +34,9 @@ const SignInForm = () => {
         // Handle success response
         console.log(response);
 
+        // Save the token in local storage
+        localStorage.setItem('access_token', response.data.access_token);
+        
         // >> RESET THE INPUTS
         setFormValues({
           email: '',
