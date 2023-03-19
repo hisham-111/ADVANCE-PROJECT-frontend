@@ -1,6 +1,6 @@
 import React from 'react'
 import { Route, Routes} from 'react-router-dom';
-
+import AddTransactionPage from '../../pages/AddTransactionPage/AddTransactionPage'
 import Home from '../../pages/home/home'
 import TransactionForm from '../../pages/transactionForm/transactionForm';
 import Trans from '../../pages/transaction/transaction';
@@ -23,6 +23,7 @@ export default function AllRoutes() {
             <Route path="/help" element={<Help />} />
             <Route  path="/signin" element={<Signin />} />
             <Route  path="/statistics" element={<Statistics />} />
+            <Route path="/addtransactionpage" element={<AddTransactionPage />} />
         </Routes>
         </BrowserRouter>
     </div>
