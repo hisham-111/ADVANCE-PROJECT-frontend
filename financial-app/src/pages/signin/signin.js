@@ -7,7 +7,7 @@ export default function Signin() {
   return (
     <section className='signin-page'>
     <img src={signinImage} alt="SignInImage" className='signInImage'/>
-    <SignInForm />
+    <SignInForm style={{width:"50%"}} />
     </section>
   )
 }
