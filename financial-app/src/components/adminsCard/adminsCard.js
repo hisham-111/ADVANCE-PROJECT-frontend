@@ -42,6 +42,22 @@ export default function AdminsCard() {
   //       console.log(error);
   //     });
   // };
+  function handleDelete(id) {
+    axios.delete(`http://localhost:8000/api/auth/admin/${id}`, {
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+      }
+    })
+    .then(response => {
+      // If the deletion was successful, update the list of admins
+      setAdmins(admins.item.filter(item => item.id !== id));
+      console.log(response.data);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }
+
   useEffect(() => {
     axios.get('http://localhost:8000/api/auth/admins',{
       headers: {
@@ -55,7 +71,7 @@ export default function AdminsCard() {
       .catch(error => {
         console.log(error);
       });
-  },[admins]);
+  },[]);
 
   return (
     
@@ -133,7 +149,7 @@ export default function AdminsCard() {
                       fontSize: "14px",
                       textTransform: "none",
                     }}
-                    // onClick={() => handleDelete(item.id)}
+                    onClick={() => handleDelete(item.id)}
                   >
                     Delete
                   </Button>
