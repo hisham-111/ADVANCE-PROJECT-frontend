@@ -13,18 +13,14 @@ import InputAdornment from '@mui/material/InputAdornment';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
+import axios from 'axios';
 
 export default function AddAdmin() {
   const [open, setOpen] = React.useState(false);
 
   const [showPassword, setShowPassword] = useState(false);
   const [formValues, setFormValues] = useState({
-    fullName: '',
-    email: '',
-    password: '',
-  });
-  const [formErrors, setFormErrors] = useState({
-    fullName: '',
+    name: '',
     email: '',
     password: '',
   });
@@ -33,30 +29,39 @@ export default function AddAdmin() {
     setShowPassword(!showPassword);
   };
 
-  const handleInputChange = (event) => {
-    const { id, value } = event.target;
-    setFormValues({ ...formValues, [id]: value });
-    setFormErrors({ ...formErrors, [id]: '' });
-  };
+  
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    let errors = {};
-    if (!formValues.email) {
-      errors.email = 'Email is required';
-    }
-    if (!formValues.password) {
-      errors.password = 'Password is required';
-    }
-    if (!formValues.fullName) {
-      errors.fullName = 'Full Name is required';
-    }
-    if (Object.keys(errors).length > 0) {
-      setFormErrors(errors);
-    } else {
-      // Close the dialog and submit the form
-      handleClose();
-    }
+    const data = {
+      name: formValues.name,
+      email: formValues.email,
+      password: formValues.password,
+    };
+  
+    axios.post('http://localhost:8000/api/auth/register', data)
+      .then(response => {
+        // Handle success response
+        console.log(response);
+
+        // >> RESET THE INPUTS
+        setFormValues({
+          name: '',
+          email: '',
+          password: '',
+        })
+        handleClose();
+      })
+      .catch(error => {
+        // Handle error response
+        console.error(error);
+        if (error.response && error.response.status === 409) {
+          alert('Email already taken, please use a different email.');
+        } else {
+          alert('Something went wrong. Please try to change the email.');
+        }
+  
+      });
   };
 
   const handleClickOpen = () => {
@@ -68,7 +73,7 @@ export default function AddAdmin() {
   };
 
   return (
-    <section >
+    <>
       <Button variant="contained" onClick={handleClickOpen} 
         size="large"
         sx={{
@@ -84,7 +89,9 @@ export default function AddAdmin() {
       </Button>
       <Dialog open={open} onClose={handleClose} >
         <DialogTitle style={{textAlign:"center", fontWeight:"600",color:"#394452"}}>Add New <Box display="inline" style={{color:'#026FC2'}}>Admin</Box></DialogTitle>
+        <form action='post' onSubmit={handleSubmit}>
         <DialogContent style={{display:"flex",alignItems:"center",flexDirection:"column",margin:"20px 10px",width:"500px"}}>
+          
         <TextField
             autoFocus
             margin="dense"
@@ -94,10 +101,9 @@ export default function AddAdmin() {
             fullWidth
             variant="outlined"
             size="30"
-            required
-            error={formErrors.fullName !== ''}
-            helperText={formErrors.fullName}
-            onChange={handleInputChange}
+            required  
+            onChange={(event) =>  setFormValues({...formValues, name: event.target.value})}     
+            value={formValues.name}       
           />
           <TextField
             autoFocus
@@ -109,9 +115,9 @@ export default function AddAdmin() {
             variant="outlined"
             size="30"
             required
-            error={formErrors.email !== ''}
-            helperText={formErrors.email}
-            onChange={handleInputChange}
+            onChange={(event) =>  setFormValues({...formValues, email: event.target.value})}   
+            value={formValues.email
+            }
           />
            <TextField
               autoFocus
@@ -121,11 +127,10 @@ export default function AddAdmin() {
               type={showPassword ? "text" : "password"} // use the showPassword state to toggle the input type
               fullWidth
               variant="outlined"
+              value={formValues.password}
               required
-              size="30"
-              error={formErrors.password !== ''}
-              helperText={formErrors.password}
-              onChange={handleInputChange}
+              size="30"    
+              onChange={(event) =>  setFormValues({...formValues, password: event.target.value})}             
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -141,11 +146,12 @@ export default function AddAdmin() {
         <Button onClick={handleClose} 
         style={{ backgroundColor: "#FFF", width: "160px",borderRadius: '10px',color:"#026FC2",fontWeight:"600" }}  variant="outlined">Cancel</Button>
 
-        <Button onClick={handleSubmit}
+        <Button type='submit'
         style={{ backgroundColor: "#026FC2", width: "160px",borderRadius: '10px',color:"#FFF",fontWeight:"600" }} variant="outlined">Add Account</Button>
 
         </DialogActions>
+        </form>
       </Dialog>
-    </section>
+    </>
   );
 }
