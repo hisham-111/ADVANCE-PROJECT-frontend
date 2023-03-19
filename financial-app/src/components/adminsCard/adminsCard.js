@@ -43,19 +43,20 @@ export default function AdminsCard() {
   //     });
   // };
   function handleDelete(id) {
-    axios.delete(`http://localhost:8000/api/auth/admin/${id}`, {
-      headers: {
-        'Authorization': 'Bearer ' + localStorage.getItem('access_token')
-      }
-    })
-    .then(response => {
-      // If the deletion was successful, update the list of admins
-      setAdmins(admins.item.filter(item => item.id !== id));
-      console.log(response.data);
-    })
-    .catch(error => {
-      console.log(error);
-    });
+    axios
+      .delete(`http://localhost:8000/api/auth/admin/${id}`, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("access_token"),
+        },
+      })
+      .then((response) => {
+        // If the deletion was successful, update the list of admins
+        setAdmins(admins.filter((item) => item.id !== id));
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   useEffect(() => {
