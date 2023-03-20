@@ -1,10 +1,27 @@
 import { Box, Button, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
-import React from "react";
+import React, { useState,useEffect } from "react";
 import PermIdentityRoundedIcon from "@mui/icons-material/PermIdentityRounded";
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import AddAdmin from '../AddAdmin/AddAdmin'
-export default function TotalAdminsCard({ totalAdmins = "NaN" }) {
+import axios from "axios";
+
+export default function TotalAdminsCard() {
+  const [totalAdmins, SetTotalAdmins] = useState([])
+  useEffect(() => {
+    axios.get('http://localhost:8000/api/auth/admins',{
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+      }
+    })
+      .then(response => {
+        SetTotalAdmins(response.data.length);
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  },[]);
   return (
     <Stack spacing={3} paddingY={5} paddingX={4} 
       sx={{
