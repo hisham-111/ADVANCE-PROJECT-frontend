@@ -75,10 +75,10 @@ const AdminsList = () => {
     })
     .then((response) => {
       // If the update was successful, update the list of admins and close the dialog
-      const updatedAdmins = updatedAdmins.map((admin) =>
-        admin.id === id ? response.data : admin
-      );
-      setAdmins(updatedAdmins);
+      // const updatedAdmins = updatedAdmins.map((admin) =>
+      //   admin.id === id ? response.data : admin
+      // );
+      // setAdmins(updatedAdmins);
       handleClose();
     })
     .catch((error) => {
