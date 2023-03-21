@@ -1,9 +1,16 @@
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
-import { Box, Button, Divider, Typography } from "@mui/material";
+import { Box, Button, Divider, Typography,DialogActions,DialogTitle,Dialog,TextField,DialogContent } from "@mui/material";
 import { Stack } from "@mui/system";
 import { React, useState,useEffect } from "react";
 import axios from 'axios';
 export default function AdminsCard() {
+  const [open, setOpen] = useState(false);
+  const [formValues, setFormValues] = useState({
+    name: '',
+    email: '', 
+  });
+  
+
     const [admins, setAdmins]=useState([
         {
             id: "1",
@@ -19,29 +26,48 @@ export default function AdminsCard() {
         }
     ]);
 
-    // handlePay = (id) => {
-  //   const response = axios
-  //     .put(`http://localhost:8000/fixed/${id}`, {
-  //       isPaid: true,
-  //     })
-  //     .then((response) => {
-  //       {
-  //         if (response.status === 200) {
-  //           const updatedBill = response.fixed;
-  //           setBills((prevState) => ({
-  //             ...prevState,
-  //         bills: prevState.bills.map((bill) =>
-  //           bill.id === updatedBill.id ? updatedBill : bill
-  //         ),
-  //           }));
-  //           console.log(bills);
-  //         }
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
+    
+
+
+    const handleSubmit = (event,id) => {
+      event.preventDefault();
+      const data = {
+        name: formValues.name,
+        email: formValues.email,
+        
+      };
+      axios
+      .patch(`http://localhost:8000/api/auth/admin/${id}`,data, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("access_token"),
+        },
+      })
+      .then((response) => {
+        // If the deletion was successful, update the list of admins
+        setAdmins(admins.filter((item) => item.id !== id));
+        console.log(response.data);
+        setFormValues({
+          name: '',
+          email: '',
+          password: '',
+        })
+        handleClose();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    };
+
+
+
+
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+  
+    const handleClose = () => {
+      setOpen(false);
+    };
   function handleDelete(id) {
     axios
       .delete(`http://localhost:8000/api/auth/admin/${id}`, {
@@ -136,7 +162,7 @@ export default function AdminsCard() {
                       fontSize: "14px",
                       textTransform: "none",
                     }}
-                    // onClick={() => handleEdit(item.id)}
+                    onClick={() => handleClickOpen(item.id)}
                   >
                     Edit
                   </Button>
@@ -161,6 +187,51 @@ export default function AdminsCard() {
             );
           })}
       </Stack>
+
+      <Dialog open={open} onClose={handleClose} >
+        <DialogTitle style={{textAlign:"center", fontWeight:"600",color:"#394452"}}>Edit<Box display="inline" style={{color:'#026FC2'}}> Admin</Box>
+        </DialogTitle>
+        <form action='post' onSubmit={handleSubmit}>
+        <DialogContent style={{display:"flex",alignItems:"center",flexDirection:"column",margin:"20px 10px",width:"500px"}}>
+          
+        <TextField
+            autoFocus
+            margin="dense"
+            id="fullName"
+            label="Full Name"
+            type="text"
+            fullWidth
+            variant="outlined"
+            size="30"
+            required  
+            onChange={(event) =>  setFormValues({...formValues, name: event.target.value})}     
+            value={admins.email}       
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="email"
+            label="Email Address"
+            type="email"
+            fullWidth
+            variant="outlined"
+            size="30"
+            required
+            onChange={(event) =>  setFormValues({...formValues, email: event.target.value})}   
+            value={formValues.email }
+          />
+           
+        </DialogContent>
+        <DialogActions style={{display:"flex",flexDirection:"row", justifyContent:"space-around",marginBottom:"20px"}}>
+        <Button onClick={handleClose} 
+        style={{ backgroundColor: "#FFF", width: "160px",borderRadius: '10px',color:"#026FC2",fontWeight:"600" }}  variant="outlined">Cancel</Button>
+
+        <Button type='submit'
+        style={{ backgroundColor: "#026FC2", width: "160px",borderRadius: '10px',color:"#FFF",fontWeight:"600" }} variant="outlined">Edit Admin</Button>
+
+        </DialogActions>
+        </form>
+      </Dialog>
     </Box>
   )
 }
