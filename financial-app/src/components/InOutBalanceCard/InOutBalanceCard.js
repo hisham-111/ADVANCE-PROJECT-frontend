@@ -18,11 +18,11 @@ export default function InOutBalanceCard({ amount, typeCode, currency }) {
 
   return (
     <Card sx={styles.card}>
-      <Typography style={styles.typeCodeTitle}>{typeCode}</Typography>
+      <Typography sx={styles.typeCodeTitle}>{typeCode}</Typography>
       <Stack direction="row" sx={styles.currencyAndAmountHolder}>
         <Stack direction="row">
-        <Typography style={styles.currency}>{currency}</Typography>
-        <Typography style={styles.amount}>{amount}</Typography>
+        <Typography sx={styles.currency}>{currency}</Typography>
+        <Typography sx={styles.amount}>{amount}</Typography>
         </Stack>
         {getIcon()}
       </Stack>
@@ -39,7 +39,7 @@ const styles = {
     boxShadow: "4px 4px 20px -10px rgba(0, 0, 0, 0.1)",
     borderRadius: "12px",
     padding: "24px",
-    width: "32%",
+    width: ["100%", "32%"],
     minHeight: "150px",
     bgcolor: "white",
   },

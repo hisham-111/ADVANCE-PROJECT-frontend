@@ -12,15 +12,19 @@ export default function Statistics() {
   return (
     <div className="statistics" style={{ backgroundColor: "#F8F9FD" }}>
       <Layout>
-        <Stack direction="row" justifyContent="space-between" >
-          <Stack paddingRight={2} style={{ width: "69%", overflow: "scroll", height: "88vh"}}>
+        <Stack direction="row" justifyContent="space-between">
+          <Stack
+            paddingRight={2}
+            style={{ width: "69%", overflow: "scroll", height: "88vh" }}
+          >
             <Stack
               direction="row"
               justifyContent="space-between"
               flexWrap="wrap"
             >
               <InOutBalanceCard
-                amount="200.000"padding
+                amount="200.000"
+                padding
                 typeCode="Income"
                 currency="$"
               />
@@ -37,7 +41,7 @@ export default function Statistics() {
             </Stack>
             <Box
               sx={{
-                marginY:"16px",
+                marginY: "16px",
                 padding: "32px",
                 border: "1px solid rgba(109, 125, 147, 0.15)",
                 boxShadow: "4px 4px 20px -10px rgba(0, 0, 0, 0.1)",
@@ -73,19 +77,19 @@ export default function Statistics() {
               <TransactionCart />
             </Box>
           </Stack>
-          <Stack spacing={2} style={{width:"28%"}}>
-          <ProfitBarCard realProfit={20} goalProfit={30} width="100%"/>
-          <Box
+          <Stack spacing={2} style={{ width: "28%" }}>
+            <ProfitBarCard realProfit={20} goalProfit={30} width="100%" />
+            <Box
+              padding={3}
               sx={{
-                padding: "32px",
                 border: "1px solid rgba(109, 125, 147, 0.15)",
                 boxShadow: "4px 4px 20px -10px rgba(0, 0, 0, 0.1)",
                 borderRadius: "12px",
                 bgcolor: "white",
               }}
             >
-          <CategoriesHistory/>
-          </Box>
+              <CategoriesHistory />
+            </Box>
           </Stack>
         </Stack>
       </Layout>
