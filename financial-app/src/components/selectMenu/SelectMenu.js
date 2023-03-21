@@ -1,12 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 
-function SelectMenu() {
-  const [timeframe, setTimeframe] = useState('Current');
-
-  const handleChange = (event) => {
-    setTimeframe(event.target.value);
-  };
+function SelectMenu({handleTimeChange, timeframe}) {
+ 
 
   return (
     <FormControl sx={{ m: 1, minWidth: 10 , bgcolor:"white"}}>
@@ -16,12 +12,12 @@ function SelectMenu() {
         id="timeframe-select"
         value={timeframe}
         label="Timeframe"
-        onChange={handleChange} >
+        onChange={handleTimeChange} >
             
-        <MenuItem value="Current">Current</MenuItem>
-        <MenuItem value="Weekly">Weekly</MenuItem>
-        <MenuItem value="Monthly">Monthly</MenuItem>
-        <MenuItem value="Yearly">Yearly</MenuItem>
+        <MenuItem value="current">Current</MenuItem>
+        <MenuItem value="this_day">Daily</MenuItem>
+        <MenuItem value="this_month">Monthly</MenuItem>
+        <MenuItem value="this_year">Yearly</MenuItem>
       </Select>
     </FormControl>
   );

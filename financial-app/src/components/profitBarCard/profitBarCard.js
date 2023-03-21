@@ -1,15 +1,33 @@
 import { Box, Typography, LinearProgress } from "@mui/material";
 import { Stack } from "@mui/system";
 import ArrowDropUpRoundedIcon from "@mui/icons-material/ArrowDropUpRounded";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
-export default function profitBar({ goalProfit, realProfit, width }) {
-  const progress = (realProfit / goalProfit) * 100;
+
+export default function ProfitBar({ realProfit, width }) {
+  const [goalProfit, setGoalProfit] = useState({ amount: 0 });
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:8000/api/goal");
+        setGoalProfit(response.data.goal[0]);
+        setLoaded(true);
+      } catch (error) {
+        console.log("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const progress = (realProfit / goalProfit.amount) * 100;
 
   return (
-    <Box
-      sx={{
-        width: {width},
+    <Box width={{base: "100%", md: "29%"}}
+      sx={{ 
         padding: "24px",
         border: "1px solid rgba(109, 125, 147, 0.15)",
         boxShadow: "4px 4px 20px -10px rgba(0, 0, 0, 0.1)",
@@ -20,22 +38,24 @@ export default function profitBar({ goalProfit, realProfit, width }) {
       <Typography variant="h6" style={{ fontWeight: "bold" }} marginBottom={2}>
         Profit Goal
       </Typography>
-      <Stack direction="row" justifyContent="space-between" alignItems="center">
-        <Typography
-          variant="subtitle1"
-          fontWeight={600}
-          color="primary"
-          style={{ fontSize: "20px" }}
-        >
-          ${realProfit}/${goalProfit}
-        </Typography>
-        <Stack direction="row" alignItems="center">
-          <ArrowDropUpRoundedIcon color="primary" fontSize="large" />
-          <Typography variant="subtitle1" fontWeight={600}>
-            {progress.toFixed(2)}%
+      {loaded ? (
+        <Stack direction="row" justifyContent="space-between" alignItems="center">
+          <Typography
+            variant="subtitle1"
+            fontWeight={600}
+            color="primary"
+            style={{ fontSize: "20px" }}
+          >
+            ${realProfit}/${goalProfit.amount}
           </Typography>
+          <Stack direction="row" alignItems="center">
+            <ArrowDropUpRoundedIcon color="primary" fontSize="large" />
+            <Typography variant="subtitle1" fontWeight={600}>
+              {progress.toFixed(2)}%
+            </Typography>
+          </Stack>
         </Stack>
-      </Stack>
+      ) : ""}
       <LinearProgress
         variant="determinate"
         value={progress}
@@ -44,3 +64,5 @@ export default function profitBar({ goalProfit, realProfit, width }) {
     </Box>
   );
 }
+
+

@@ -3,7 +3,7 @@ import { Route, Routes} from 'react-router-dom';
 import AddTransactionPage from '../../pages/AddTransactionPage/AddTransactionPage'
 import Home from '../../pages/home/home'
 import TransactionForm from '../../pages/transactionForm/transactionForm';
-import Trans from '../../pages/transaction/transaction';
+import Transaction from '../../pages/transaction/transaction';
 import Admins from '../../pages/admins/admins';
 import Help from '../../pages/help/help';
 import Signin from '../../pages/signin/signin';
@@ -19,7 +19,7 @@ export default function AllRoutes() {
             <Route path="/admins" element={<Admins />} />
             <Route path="/changepass" element={<Changepass />} />
             <Route path="/transaction-form" element={<TransactionForm />} />
-            <Route path="/transactions" element={<Trans />} />
+            <Route path="/transactions" element={<Transaction />} />
             <Route path="/help" element={<Help />} />
             <Route  path="/signin" element={<Signin />} />
             <Route  path="/statistics" element={<Statistics />} />

@@ -1,51 +1,92 @@
-import { Container, Stack } from "@mui/material";
+import { CircularProgress, Stack } from "@mui/material";
 import { Box } from "@mui/system";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../../components/layout/layout";
 import SelectMenu from "../../components/selectMenu/SelectMenu";
 import InOutBalanceCard from "../../components/InOutBalanceCard/InOutBalanceCard";
 import TransactionHistory from "../../components/transaction/transaction";
 import ProfitBarCard from "../../components/profitBarCard/profitBarCard";
 import BillsCard from "../../components/billsCard/billsCard";
+import axios from "axios";
 
-export default function home() {
+export default function Home() {
+  const [transactions, setTransactions] = useState([]);
+  const [incomes, setIncomes] = useState([]);
+  const [outcomes, setOutcomes] = useState([]);
+  const [balance, setBalance] = useState([]);
+  const [loaded, setLoaded] = useState(false);
+  const [timeframe, setTimeframe] = useState("current");
+
+  const handleTimeChange = (event) => {
+    setTimeframe(event.target.value);
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:8000/api/alltransactions"
+        );
+        setTransactions(response.data.transactions.data);
+        setIncomes(response.data.totalIncome);
+        setOutcomes(response.data.totalOutcome);
+        setBalance(response.data.totalBalance);
+        setLoaded(true);
+      } catch (error) {
+        console.log("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [timeframe]);
+
   return (
     <div className="dashboard" style={{ backgroundColor: "#F8F9FD" }}>
-      <Layout>
-        <Stack direction="row">
-          <SelectMenu />
-          <SelectMenu />
-        </Stack>
-        <Stack direction="row" justifyContent="space-between">
+      {loaded ? (
+        <Layout>
+          <Stack direction="row">
+            <SelectMenu
+              handleTimeChange={handleTimeChange}
+              timeframe={timeframe}
+            />
+            {/* <SelectMenu handleTimeChange={handleTimeChange}
+              timeframe={timeframe}/> */}
+          </Stack>
+          <Stack direction={{base: "column-reverse", md: "row"}} justifyContent="space-between" pb={{base:"2", md:"0"}}>
             <Stack
-              direction="row"
+              direction={{base: "column", md: "row"}}
               justifyContent="space-between"
               flexWrap="wrap"
-            width="67%"
+              width={{base: "100%", md: "67%"}}
             >
               <InOutBalanceCard
-                amount="200.000"
-                typeCode="Income"
+                amount={incomes[timeframe]}
+                typeCode="Income" direction={{base: "column", md: "row"}}
+              justifyContent="space-between"
+              flexWrap="wrap"
                 currency="$"
               />
               <InOutBalanceCard
-                amount="100.000"
+                amount={outcomes[timeframe]}
                 typeCode="Outcome"
                 currency="$"
               />
               <InOutBalanceCard
-                amount={200.0 - 100.0}
+                amount={balance[timeframe]}
                 typeCode="Balance"
                 currency="$"
               />
             </Stack>
-            <ProfitBarCard realProfit={20} goalProfit={30} width="29%"/>
+            <ProfitBarCard realProfit={balance[timeframe]} />
           </Stack>
-          <Stack direction="row" justifyContent="space-between">
-          <TransactionHistory />
-            <BillsCard />
+          <Stack direction={{base: "column", md: "row"}} justifyContent="space-between">
+            <TransactionHistory transactions={transactions} />
+            <BillsCard transactions={transactions} setTransactions={setTransactions}/>
           </Stack>
-      </Layout>
+        </Layout>
+      ) : (
+        <CircularProgress color="primary" />
+      )}
     </div>
   );
 }
