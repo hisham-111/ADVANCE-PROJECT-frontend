@@ -240,7 +240,7 @@ useEffect(() => {
         onChange={(event) => {
           setSelectedTitle(event.target.value);
           setDescription(
-            fixedKey.find((key) => key.title === event.target.value).description
+            fixedKey.find((key) => key.id === event.target.value).description
           );
         }}
         required
