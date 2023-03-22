@@ -68,45 +68,39 @@ ChartJS.register(
 //   },
 // };
 
-const BalanceChart = () => {
-  //     const [chartData, setChartData] = useState({});
+const BalanceChart = ({transactions}) => {
+  
+  const monthlyBalances = {};
 
-  //     useEffect(() => {
-  //   const fetchData = async () => {
-  //     const response = await fetch('/api/monthly-balance-history');
-  //     const data = await response.json();
-  // const dates = data.map((item) => item.start_date);
-  // const balances = data.map((item) => item.balance);
+transactions.forEach((transaction) => {
+  const createdDate = new Date(transaction.start_date);
+  const monthKey = `${createdDate.getFullYear()}-${createdDate.getMonth() + 1}`;
 
-  // setChartData({
-  //   labels: dates,
-  //   datasets: [
-  //     {
-  //       label: 'Monthly Balance',
-  //       data: balances,
-  //       backgroundColor: 'rgba(75,192,192,0.4)',
-  //       borderColor: 'rgba(75,192,192,1)',
-  //       borderWidth: 1,
-  //     },
-  //   ],
-  // });
-  //   };
+  if (!monthlyBalances[monthKey]) {
+    monthlyBalances[monthKey] = 0;
+  }
 
-  //   fetchData();
-  // }, []);
-  const labels = ["January", "February", "March", "April", "May", "June"];
+  if (transaction.type_code === 'expenses') {
+    monthlyBalances[monthKey] -= parseFloat(transaction.amount);
+  } else {
+    monthlyBalances[monthKey] += parseFloat(transaction.amount);
+  }
+});
 
-  const data = {
-    labels: labels,
-    datasets: [
-      {
-        fill: true,
+console.log(monthlyBalances);
+const data = {
+  labels: Object.keys(monthlyBalances),
+  datasets: [
+    {
+      label: 'Monthly Balance',
+      data: Object.values(monthlyBalances),
+      fill: true,
         borderColor: "rgb(53, 162, 235)",
         backgroundColor: "rgba(53, 162, 235, 0.5)",
-        data: [0, 10, 5, 2, 20, 30, 45],
-      },
-    ],
-  };
+    },
+  ],
+};
+
   const options = {
     responsive: true,
     plugins: {

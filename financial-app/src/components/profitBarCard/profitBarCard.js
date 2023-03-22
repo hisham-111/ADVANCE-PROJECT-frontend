@@ -26,7 +26,8 @@ export default function ProfitBar({ realProfit, width }) {
   const progress = (realProfit / goalProfit.amount) * 100;
 
   return (
-    <Box width={{base: "100%", md: "29%"}}
+    <Box 
+    width={width}
       sx={{ 
         padding: "24px",
         border: "1px solid rgba(109, 125, 147, 0.15)",

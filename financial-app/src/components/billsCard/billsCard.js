@@ -5,34 +5,31 @@ import { React, useEffect, useState } from "react";
 import axios from "axios";
 
 export default function BillsCard({ transactions, setTransactions }) {
-  const handlePay = async (id) => {
+  const handlePay = async (id, index) => {
     try {
-      
-      const response = await axios.post({
-        method: 'PATCH',
-        url: '"http://localhost:8000/api/alltransactions"',
+      const response = await axios({
+        method: "PATCH",
+        url: `http://localhost:8000/api/fixedtransaction/${id}`,
         data: {
           is_paid: 1,
-        }
-    })
-    
-        
-      if (response.status === 200) {
-        const updatedBill = response.data.fixed;
-        setTransactions((prevState) => ({
-          ...prevState,
-          transactions: prevState.transactions.map((transaction) =>
-            transaction.transaction_type === "fixed" && transaction.id === updatedBill.id
-              ? { ...transaction, is_paid: updatedBill.is_paid }
-              : transaction
-          ),
-        }));
-      }
+        },
+      });
+      const newTransaction =[...transactions];
+newTransaction[index].is_paid= 1;
+setTransactions(newTransaction);
+      // setTransactions((prevState) => ({
+      //   ...prevState,
+      //   transactions: prevState.transactions.map((transaction) =>
+      //     transaction.transaction_type === "fixed" && transaction.id === id
+      //       ? { ...transaction, is_paid: 1 }
+      //       : transaction
+      //   ),
+      // }));
     } catch (error) {
       console.log("Error fetching data:", error);
     }
   };
-  
+
   return (
     <Box
       sx={{
@@ -86,7 +83,7 @@ export default function BillsCard({ transactions, setTransactions }) {
                       fontSize: ["12px", "14px"],
                     }}
                   >
-                    {item.next_payment_date}
+                    {item.start_date}
                   </Typography>
                 </Stack>
                 <Button
@@ -99,7 +96,7 @@ export default function BillsCard({ transactions, setTransactions }) {
                     fontSize: "14px",
                     textTransform: "none",
                   }}
-                  onClick={() => handlePay(item.id)}
+                  onClick={() => handlePay(item.id, index)}
                 >
                   Pay
                 </Button>

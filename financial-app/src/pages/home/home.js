@@ -38,12 +38,12 @@ export default function Home() {
     };
 
     fetchData();
-  }, [timeframe]);
+  }, [timeframe, transactions]);
 
   return (
     <div className="dashboard" style={{ backgroundColor: "#F8F9FD" }}>
       {loaded ? (
-        <Layout>
+        <Layout title="Dashboard">
           <Stack direction="row">
             <SelectMenu
               handleTimeChange={handleTimeChange}
@@ -77,15 +77,17 @@ export default function Home() {
                 currency="$"
               />
             </Stack>
-            <ProfitBarCard realProfit={balance[timeframe]} />
+            <ProfitBarCard realProfit={balance[timeframe]} width={{base: "100%", md: "29%"}}/>
           </Stack>
           <Stack direction={{base: "column", md: "row"}} justifyContent="space-between">
             <TransactionHistory transactions={transactions} />
             <BillsCard transactions={transactions} setTransactions={setTransactions}/>
           </Stack>
         </Layout>
-      ) : (
+      ) : (<Box width="100vw" height="100vh" display="flex" justifyContent="center" alignItems="center">
         <CircularProgress color="primary" />
+
+      </Box>
       )}
     </div>
   );

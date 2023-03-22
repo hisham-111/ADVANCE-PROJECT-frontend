@@ -25,56 +25,57 @@ ChartJS.register(
   BarController
 );
 
-const labels = ["January", "February", "March", "April", "May", "June", "July"];
+export default function TransactionChart({ transactions }) {
+  const monthlyIncomes = {};
+  const monthlyOutcomes = {};
 
-const data = {
-  labels,
-  datasets: [
-    {
-      borderRadius: Number.MAX_VALUE,
-      type: "bar",
-      label: "Income",
-      backgroundColor: "rgba(53, 162, 235)",
-      data: [0, 10, 5, 2, 20, 30, 45],
-      borderColor: "white",
-      borderWidth: 2,
-    },
-    {
-      borderRadius: Number.MAX_VALUE,
-      type: "bar",
-      label: "Outcome",
-      backgroundColor: "red",
-      data: [0, 10, 5, 2, 20, 30, 45],
-    },
-  ],
-};
+  transactions.forEach((transaction) => {
+    const createdDate = new Date(transaction.start_date);
+    const monthKey = `${createdDate.getFullYear()}-${
+      createdDate.getMonth() + 1
+    }`;
+    if (transaction.type_code === "expenses") {
+      if (!monthlyOutcomes[monthKey]) {
+        monthlyOutcomes[monthKey] = 0;
+      }
+      monthlyOutcomes[monthKey] += parseFloat(transaction.amount);
+    } else {
+      if (!monthlyIncomes[monthKey]) {
+        monthlyIncomes[monthKey] = 0;
+      }
+      monthlyIncomes[monthKey] += parseFloat(transaction.amount);
+    }
+  });
 
+  const allMonths = new Set([...Object.keys(monthlyIncomes), ...Object.keys(monthlyOutcomes)]);
 
-export default function TransactionChart() {
-  //   const [chartData, setChartData] = useState({});
+  const sortedMonths = Array.from(allMonths).sort((a, b) => {
+    const [yearA, monthA] = a.split("-");
+    const [yearB, monthB] = b.split("-");
+    return yearA - yearB || monthA - monthB;
+  });
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const response = await fetch('/api/monthly-balance-history');
-  //     const data = await response.json();
-  //     const dates = data.map((item) => item.start_date);
-  //     const balances = data.map((item) => item.balance);
-
-  //     setChartData({
-  //       labels: dates,
-  //       datasets: [
-  //         {
-  //           label: 'Monthly Balance',
-  //           data: balances,
-  //           backgroundColor: 'rgba(75,192,192,0.4)',
-  //           borderColor: 'rgba(75,192,192,1)',
-  //           borderWidth: 1,
-  //         },
-  //       ],
-  //     });
-  //   };
-
-  //   fetchData();
-  // }, []);
+  const data = {
+    labels: sortedMonths,
+    datasets: [
+      {
+        label: 'Monthly Incomes',
+        data: sortedMonths.map(month => monthlyIncomes[month] || 0),
+        fill: true,
+        borderColor: "rgb(53, 162, 235)",
+        backgroundColor: "rgba(53, 162, 235, 0.5)",
+      },
+      {
+        label: 'Monthly Outcomes',
+        data: sortedMonths.map(month => monthlyOutcomes[month] || 0),
+        fill: true,
+        borderColor: "red",
+        backgroundColor: "red",
+      },
+    ],
+  };
+ 
+  console.log("income", monthlyIncomes, 'expenses', monthlyOutcomes);
   return <Chart type="bar" data={data} />;
 }
+

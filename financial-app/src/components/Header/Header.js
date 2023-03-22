@@ -8,35 +8,15 @@ import FaceIcon from "@mui/icons-material/Face";
 import { Stack } from "@mui/system";
 import "./Header.css";
 
-export default function BasicTextFields() {
+export default function BasicTextFields({title="Dashboard"}) {
   return (
-    <Stack>
-
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "20px",
-        }}>
-        <Typography sx={{ fontWeight: "bold", fontSize: "20px" }}>
-          Dashboard
-        </Typography>
-
-
-        <Box>
-          <TextField
-            label="Search for transaction"
-            sx={{ marginLeft: "8px", marginRight: "8px" }}
-          />
-        </Box>
-
-        <Box sx={{ display: "flex", flexWrap: "nowrap", color: "#6D7D93" }}>
-          <NotificationsNoneIcon />
-          <FaceIcon />
-        </Box>
-      </Box>
-
-    </Stack>
+    <Box className="Header_container">
+            <Stack className="Stack" direction="row" width="100%" justifyContent="space-between" alignItems="center">
+              <h1 className="title">{title}</h1>
+              <NotificationsNoneIcon fontSize="medium"/>
+            </Stack>
+          </Box>
+          
+      
   );
 }
