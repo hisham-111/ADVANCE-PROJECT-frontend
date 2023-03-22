@@ -24,7 +24,7 @@ export default function Transaction() {
       }
     };
     fetchData();
-  }, []);
+  }, [transactions]);
   return (
     <div className="dashboard" style={{ backgroundColor: "#F8F9FD" }}>
       <Layout>
@@ -33,10 +33,8 @@ export default function Transaction() {
           justifyContent="space-between"
           alignItems="center"
         >
-          <Typography variant="h6" sx={{ fontWeight: "bold" }} marginBottom={1}>
-        Transaction History
-      </Typography>
-      <Button
+          
+      {/* <Button
                   variant="contained"
                     sx={{
                       border: "2px solid #026FC2",
@@ -49,7 +47,7 @@ export default function Transaction() {
                     }}
                   
                     // onClick={() => handleDelete(item.id)}
-                  ><AddRoundedIcon /></Button>
+                  ><AddRoundedIcon /></Button> */}
     
         </Stack>
         <TransactionList transactions={transactions} setTransactions={setTransactions}/>

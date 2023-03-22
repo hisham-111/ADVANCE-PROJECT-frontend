@@ -5,7 +5,7 @@ import "./layout.css";
 import { Container } from "@mui/material";
 import { Stack } from "@mui/system";
 
-export default function Layout({ children }) {
+export default function Layout({ children, title }) {
   return (
     <div
       className="layout"
@@ -21,7 +21,7 @@ export default function Layout({ children }) {
         // position="relative"
         // overflow="auto"
       >
-        <Header />
+        <Header title={title}/>
         {children}
       </Stack>
     </div>

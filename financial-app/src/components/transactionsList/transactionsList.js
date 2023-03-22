@@ -10,7 +10,6 @@ import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import axios from "axios";
 
-
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -62,28 +61,31 @@ export default function TransactionList({ transactions, setTransactions }) {
     }
   };
 
-  const handleDelete = (id, transaction_type) => {
+  const handleDelete = (id, transaction_type, index) => {
     if (transaction_type === "fixed") {
       axios
         .delete(`http://localhost:8000/api/fixedtransaction/${id}`)
-        // .then((response) => {
-
-        // })
+        .then((response) => {
+          let newTransactions = [...transactions];
+          newTransactions.splice(index, 1);
+          setTransactions(newTransactions);
+        })
         .catch((error) => {
           console.log(error);
         });
     } else {
       axios
         .delete(`http://localhost:8000/api/recurrings/${id}`)
-        // .then((response) => {
-         
-        // })
+        .then((response) => {
+          let newTransactions = [...transactions];
+          newTransactions.splice(index, 1);
+          setTransactions(newTransactions);
+        })
         .catch((error) => {
           console.log(error);
         });
     }
   };
-  
 
   return (
     <Box
@@ -95,6 +97,9 @@ export default function TransactionList({ transactions, setTransactions }) {
         bgcolor: "white",
       }}
     >
+      <Typography variant="h6" sx={{ fontWeight: "bold" }} marginBottom={1}>
+        Transaction History
+      </Typography>
       <Box sx={{ position: "relative" }}>
         <Tabs
           value={value}
@@ -142,17 +147,27 @@ export default function TransactionList({ transactions, setTransactions }) {
                       >
                         {getIcon(transaction.type)}
                       </Box>
-
-                      <Typography
-                        variant="subtitle1"
-                        sx={{
-                          alignSelf: "center",
-                          fontWeight: "bold",
-                          textTransform: "capitalize",
-                        }}
-                      >
-                        {transaction.title}
-                      </Typography>
+                      <Stack>
+                        <Typography
+                          sx={{
+                            color: "gray",
+                            fontWeight: "400",
+                            fontSize: ["12px", "14px"],
+                          }}
+                        >
+                          {transaction.start_date}
+                        </Typography>
+                        <Typography
+                          variant="subtitle1"
+                          sx={{
+                            alignSelf: "center",
+                            fontWeight: "bold",
+                            textTransform: "capitalize",
+                          }}
+                        >
+                          {transaction.title}
+                        </Typography>
+                      </Stack>
                     </Stack>
                     <Typography
                       sx={{
@@ -164,11 +179,7 @@ export default function TransactionList({ transactions, setTransactions }) {
                       {transaction.category_name}
                     </Typography>
 
-                    <Typography
-                      sx={{ alignSelf: "center" }}
-                      width="20%"
-                      fontWeight="600"
-                    >
+                    <Typography sx={{ alignSelf: "center" }} fontWeight="600">
                       {transaction.currency_name} {transaction.amount}
                     </Typography>
                   </Box>
@@ -213,30 +224,66 @@ export default function TransactionList({ transactions, setTransactions }) {
                         {getIcon(transaction.type_code)}
                       </Box>
 
+                      <Stack>
+                        <Typography
+                          variant="subtitle1"
+                          sx={{
+                            alignSelf: "center",
+                            fontWeight: "bold",
+                            textTransform: "capitalize",
+                          }}
+                        >
+                          {transaction.title}
+                        </Typography>
+                        <Typography
+                          sx={{
+                            color: "gray",
+                            fontWeight: "400",
+                            fontSize: ["12px", "14px"],
+                            textAlign: "center",
+                          }}
+                        >
+                          {transaction.start_date}
+                        </Typography>
+                      </Stack>
+                    </Stack>
+                    <Stack>
                       <Typography
-                        variant="subtitle1"
+                        sx={{ alignSelf: "center", fontWeight: "bold" }}
+                      >
+                        {transaction.category_name}
+                      </Typography>
+
+                      <Typography
                         sx={{
-                          alignSelf: "center",
-                          fontWeight: "bold",
-                          textTransform: "capitalize",
+                          color: "gray",
+                          fontWeight: "400",
+                          fontSize: ["12px", "14px"],
+                          textAlign: "center",
                         }}
                       >
-                        {transaction.title}
+                        Category
                       </Typography>
                     </Stack>
-                    <Typography
-                      sx={{ alignSelf: "center", fontWeight: "bold" }}
-                    >
-                      {transaction.category_name}
-                    </Typography>
-
-                    <Typography
-                      sx={{ alignSelf: "center" }}
-                      width="20%"
-                      fontWeight="600"
-                    >
-                      {transaction.currency_name} {transaction.amount}
-                    </Typography>
+                    <Stack>
+                      <Typography
+                        sx={{ alignSelf: "center" }}
+                        
+                        fontWeight="600"
+                      >
+                        {transaction.currency_name} {transaction.amount}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          color: "gray",
+                          fontWeight: "400",
+                          fontSize: ["12px", "14px"],
+                          textAlign: "center",
+                        }}
+                      >
+                        Amount
+                      </Typography>
+                    </Stack>
                     <Stack direction="row" spacing={2}>
                       <Button
                         sx={{
@@ -266,7 +313,13 @@ export default function TransactionList({ transactions, setTransactions }) {
                           textTransform: "none",
                         }}
                         startIcon={<DeleteRoundedIcon />}
-                          onClick={(e) => handleDelete(transaction.id, transaction.transaction_type)}
+                        onClick={(e) =>
+                          handleDelete(
+                            transaction.id,
+                            transaction.transaction_type,
+                            index
+                          )
+                        }
                       >
                         Delete
                       </Button>

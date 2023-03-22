@@ -92,7 +92,7 @@ export default function TransactionHistory({ transactions }) {
       }}
     >
       <Typography variant="h6" sx={{ fontWeight: "bold" }} marginBottom={1}>
-        Transaction History
+        Transactions Categories History
       </Typography>
       <Box sx={{ position: "relative" }}>
         <Tabs
